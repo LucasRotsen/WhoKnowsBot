@@ -11,14 +11,7 @@
  Abaixo estão mais informações sobre a implementação do robô.
  
   </tr>
-  
-  ## Requisitos
-  
-  Para compilar e executar a aplicação é necessário ter instalado:
-  
-  - [Python 3.7.1](https://www.python.org/ftp/python/3.7.1/python-3.7.1.exe)
-  - [Pipenv 2018.10.13](https://pypi.org/project/pipenv/)
-  
+   
   ## Configuração inicial
   <p>Em twitter_connection.py atribuir valores às variáveis:</p>
   
@@ -39,17 +32,32 @@
     accessTokenSecret = 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX'
   </pre>
   
-  A partir desse momento é necessário instalar as depêndecias do projeto com `pipenv install` e o script já está pronto para executar.<br/>
+## Executando o Robô
+
+_Este projeto foi testado no sistema operacional Ubuntu 16.04 com Python 3.5.2._ 
+
+Para executar o robô é necessário checar se o `pip` está instalado com o comando `pip --version`. Se o comando não for reconhecido é possível instalá-lo no Ubuntu 16.04 com o gerenciador de pacotes:
+
+      # apt-get update
+      # apt-get install python-pip
+
+Em seguida verifique se o `pipenv` está instalado com o comando `pipenv --version`. Caso o comando não seja reconhecido é possível instalá-lo com o pip:
+
+      $ pip install --user pipenv
+   
+Com o pipenv instalado, basta executar na pasta raiz do projeto:
+
+      $ pipenv install
+      $ pipenv run python main.py
   
-  Para iniciar o script execute na raiz do projeto: `pipenv run python main.py` .<br/>
+O primeiro comando vai instalar as dependências especificadas no arquivo "Pipfile" e o segundo vai iniciar o robô através da execução do arquivo "main.py". Este script está em um loop infinito, quando necessário deve-se interrompê-lo manualmente.
   
-  Este script está em um loop infinito. Quando necessário, deve-se interrompê-lo manualmente.<br/>
   
   ## Ativação do script
   <p>Com o script executando, sempre que uma novas menções são direcionadas à conta do Twitter associado às variáveis definidas acima, inicia-se a análise de cada menção individualmente.<br/>
   OBS: Por conta de limites da API, a verificação de novas menções ocorrem de 1 em 1 minuto.
   </p>
-  <p>Quando não há novas menções o script hiberna por 1 minutos, e verifica novamente novas menções<p>
+  Quando não há novas menções o script hiberna por 1 minutos, e verifica novamente novas menções.<br/>
   
   <br/>
   

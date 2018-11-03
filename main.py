@@ -26,7 +26,7 @@ class TwitterBot(object):
             new_mentions = self.get_bot_mentions(search_limit)
 
             for mention in new_mentions:
-                tweet_text = mention.full_text
+                tweet_text = mention.text
                 tweet_text_splitted = tweet_text.split(" ")
 
                 if len(mention.hashtags) > 0:
@@ -136,7 +136,7 @@ class TwitterBot(object):
                 for tweet in current_time_line:
 
                     # If term exists into a tweet....
-                    if self.accent_remover(tweet.full_text).count(self.accent_remover(term)) > 0:
+                    if self.accent_remover(tweet.text).count(self.accent_remover(term)) > 0:
 
                         # Get when the tweet was created in format yyyy-mm-dd HH-MM-SS
                         created = tweet.created_at.split(" ")
