@@ -18,17 +18,24 @@ class MentionsReplies(object):
         except error.TwitterError as e:
             self.add_error_log(e.message, "PostUpdate")
 
-    def reply_mention_how_many(self, mention_id, term, user, users_amount):
+    def reply_mention_how_many(self, mention_id, term, user, users_amount, knowledge, specialization):
         reply = None
         if users_amount == 0:
-            reply = "@" + user + " Olá @" + user + " ,infelizmente não encontrei ninguém entre quem você segue " \
+            reply = "@" + user + " Olá @" + user + ", infelizmente não encontrei ninguém entre quem você segue " \
                                                    "falando sobre #" + term + " :("
         elif users_amount == 1:
             reply = "@" + user + " Olá @" + user + ", encontrei " + str(users_amount) + " pessoa que você segue " \
-                                                                                        "falando sobre #" + term + ". Diga-me, de 1 a 5, o quanto você concorda com esta resposta :)"
+                                                                                        "falando sobre #" + term + \
+                    ". Proporção de conhecimento: " + repr('%.2f' % knowledge) + \
+                    ". Especialização: " + repr('%.2f' % specialization) + \
+                    ". Diga-me, de 1 a 5, o quanto você concorda com esta resposta :) "
+
         elif users_amount > 1:
             reply = "@" + user + " Olá @" + user + ", encontrei " + str(users_amount) + " pessoas que você segue " \
-                                                                                        "falando sobre #" + term + ". Diga-me, de 1 a 5, o quanto você concorda com esta resposta :)"
+                                                                                        "falando sobre #" + term + \
+                    ". Proporção de conhecimento: " + repr('%.2f' % knowledge) + \
+                    ". Especialização: " + repr('%.2f' % specialization) + \
+                    ". Diga-me, de 1 a 5, o quanto você concorda com esta resposta :)"
 
         # Post the reply on Twitter
         try:
@@ -52,6 +59,6 @@ class MentionsReplies(object):
 
     @staticmethod
     def add_error_log(error_message, error_type):
-        file = open('files/error_log.txt', 'a')
+        file = open('resources/error_log.txt', 'a')
         file.write(str(datetime.now()) + " - " + error_type + ": " + error_message + "\n")
         file.close()

@@ -89,15 +89,28 @@ class TwitterBot(object):
 
         print("Analisando menção de: " + str(user_name) + " | QUANTOSSABEM")
 
+        friends_with_knowledge = 0
+        total_of_specialization = 0
+
         friends = self.get_user_base(user_id, "friends")
         friends_used_term = self.get_users_posts_term(friends, term)
-        friends_whit_knowledge = 0
 
         for friend in friends_used_term:
-            if len(friends_used_term[friend]) > 0:
-                friends_whit_knowledge = friends_whit_knowledge + 1
+            friend_actions_with_term = len(friends_used_term[friend])
 
-        self.replies.reply_mention_how_many(mention.id, term, mention.user.screen_name, friends_whit_knowledge)
+            if friend_actions_with_term > 0:
+                max_id = 9000000000000000000
+                tweets = self.api.GetUserTimeline(count=200, user_id=friend, max_id=max_id,
+                                                  exclude_replies=False, include_rts=True)
+
+                friends_with_knowledge += 1
+                total_of_specialization += friend_actions_with_term / len(tweets)
+
+        proportion_of_knowledge = friends_with_knowledge / len(friends)
+        level_of_specialization = total_of_specialization / len(friends)
+
+        self.replies.reply_mention_how_many(mention.id, term, mention.user.screen_name, friends_with_knowledge,
+                                            proportion_of_knowledge, level_of_specialization)
 
     def get_lowest_timestamp(self, users_used_term):
         lowest = 9999999999999
@@ -166,7 +179,9 @@ class TwitterBot(object):
                     else:
                         if len(current_time_line) > 0:
                             max_id = current_time_line[len(current_time_line) - 1].id - 1
+
             dic_users_used_term[user] = tweets
+
         return dic_users_used_term
 
     def get_user_base(self, user_id, collect_from):
