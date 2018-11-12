@@ -21,23 +21,18 @@ class MentionsReplies(object):
     def reply_mention_how_many(self, mention_id, term, user, users_amount, knowledge, specialization):
         reply = None
         knowledge_str = str(int(knowledge * 100))
-        specialization_str = str(int(specialization * 100))
 
         if users_amount == 0:
             reply = "@" + user + " Olá @" + user + ", infelizmente não encontrei ninguém entre quem você segue " \
                                                    "falando sobre #" + term + " :("
 
-        elif users_amount >= 1 and specialization >= 0.01:
-            reply = \
-                "@" + user + " Olá @" + user + ", descobri que " + knowledge_str + "% das pessoas que você segue falam sobre #" + term + \
-                ". Também observei que " + specialization_str + "% dos tweets mais recentes delas são sobre este assunto" \
-                                                                ". Diga-me, de 1 a 5, o quanto você concorda com esta resposta :) "
+        else:
+            specialization_str = ("%.3f" % specialization)
 
-        elif users_amount >= 1 and specialization < 0.01:
             reply = \
-                "@" + user + " Olá @" + user + ", descobri que " + knowledge_str + "% das pessoas que você segue falam sobre #" + term + \
-                ". Também observei que menos de 1% dos tweets mais recentes delas são sobre este assunto" \
-                ". Diga-me, de 1 a 5, o quanto você concorda com esta resposta :) "
+                "@" + user + " Olá @" + user + ", " + knowledge_str + "% das pessoas que você segue falam sobre #" + term + \
+                ". O nível de especialização da sua rede é " + specialization_str + " em uma escala entre 0 e 1" \
+                                                                                    ". Diga-me, de 1 a 5, o quanto você concorda com esta resposta :) "
 
         # Post the reply on Twitter
         try:
