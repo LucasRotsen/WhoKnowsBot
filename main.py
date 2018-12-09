@@ -15,12 +15,6 @@ from whoknowsbot.mentions_replies import MentionsReplies
 class TwitterBot(object):
     pickle_dict = {}
 
-    how_many_dict = {}
-    how_terms_dict = {}
-
-    who_knows_dict = {}
-    who_terms_dict = {}
-
     def __init__(self):
         self.api = twitter_connection.open_connection()
         self.replies = MentionsReplies(self.api)
@@ -29,50 +23,38 @@ class TwitterBot(object):
         pass
 
     def listener(self):
-        while True:
-            try:
-                time_before_processing = datetime.now()
+        try:
+            f = open('ambiente_de_teste.pckl', 'rb')
+            self.pickle_dict = pickle.load(f)
+            f.close()
 
-                search_limit = self.get_search_limit()
-                new_mentions = self.get_bot_mentions(search_limit)
+            time_before_processing = datetime.now()
 
-                self.pickle_dict["mentions"] = new_mentions;
+            search_limit = self.get_search_limit()
+            new_mentions = self.pickle_dict.get("mentions")
 
+            for mention in new_mentions:
+                tweet_text = mention.text
+                tweet_text_splitted = tweet_text.split(" ")
 
-                #
-                # f = open('store.pckl', 'rb')
-                # obj = pickle.load(f)
-                # f.close()
-
-                for mention in new_mentions:
-                    tweet_text = mention.text
-                    tweet_text_splitted = tweet_text.split(" ")
-
-                    if len(mention.hashtags) > 0:
-                        if tweet_text_splitted[1].upper() == "QUANTOSSABEM":
-                            self.how_many_knows(mention)
-                        elif tweet_text_splitted[1].upper() == "QUEMSABE":
-                            self.who_knows(mention)
-                        else:
-                            pass
+                if len(mention.hashtags) > 0:
+                    if tweet_text_splitted[1].upper() == "QUANTOSSABEM":
+                        self.how_many_knows(mention)
+                    elif tweet_text_splitted[1].upper() == "QUEMSABE":
+                        self.who_knows(mention)
                     else:
                         pass
+                else:
+                    pass
 
-                self.pickle_dict["users_how"] = self.how_terms_dict
-                self.pickle_dict["users_who"] = self.who_terms_dict
+            time_after_processing = datetime.now()
+            processing_duration = (time_after_processing - time_before_processing).total_seconds()
+            {} if processing_duration > 60 else time.sleep(60 - processing_duration)
 
-                f = open('ambiente_de_teste.pckl', 'wb')
-                pickle.dump(self.pickle_dict, f)
-                f.close()
-
-                time_after_processing = datetime.now()
-                processing_duration = (time_after_processing - time_before_processing).total_seconds()
-                {} if processing_duration > 60 else time.sleep(60 - processing_duration)
-
-            # If something happens with the network, sleep for 1 minute and restart bot.
-            except ConnectionError as e:
-                self.add_error_log(e.args[0].args[0], "Listener")
-                time.sleep(60)
+        # If something happens with the network, sleep for 1 minute and restart bot.
+        except ConnectionError as e:
+            self.add_error_log(e.args[0].args[0], "Listener")
+            time.sleep(60)
 
     def who_knows(self, mention):
         term = mention.hashtags[0].text
@@ -82,11 +64,9 @@ class TwitterBot(object):
 
         print("Analisando menção de: " + str(user_name) + " | QUEMSABE")
 
-        followers = self.get_user_base(user_id, "followers")
-        self.pickle_dict["followers"] = followers
+        followers = self.pickle_dict.get("followers")
 
-        followers_used_term = self.get_users_posts_term(followers, term)
-        user_dict["followers_used_term"] = followers_used_term
+        followers_used_term = self.pickle_dict.get("users_who").get(term).get("followers_used_term")
 
         lowest_timestamp = self.get_lowest_timestamp(followers_used_term)
 
@@ -115,13 +95,10 @@ class TwitterBot(object):
                     suitable_follower_score = score
                     suitable_follower_id = follower
 
-            suitable_follower_screen_name = self.get_user_name(suitable_follower_id)
+            print(suitable_follower_id == self.pickle_dict.get("users_who").get(term).get("suitable_follower_id"))
+            print(suitable_follower_score == self.pickle_dict.get("users_who").get(term).get("suitable_follower_score"))
+            print("")
 
-            user_dict["suitable_follower_score"] = suitable_follower_score
-            user_dict["suitable_follower_id"] = suitable_follower_id
-            user_dict["suitable_follower_screen_name"] = suitable_follower_screen_name
-
-            self.who_terms_dict[term] = user_dict
             # TODO-Eric descomentar
             # self.replies.reply_mention_who_know(mention.id, term, mention.user.screen_name,
             #                                     suitable_follower_screen_name)
@@ -138,11 +115,9 @@ class TwitterBot(object):
         friends_with_knowledge = 0
         total_of_specialization = 0
 
-        friends = self.get_user_base(user_id, "friends")
-        self.pickle_dict["friends"] = friends
+        friends = self.pickle_dict.get("friends")
 
-        friends_used_term = self.get_users_posts_term(friends, term)
-        user_dict["friends_used_term"] = friends_used_term
+        friends_used_term = self.pickle_dict.get("users_how").get(term).get("friends_used_term")
 
         for friend in friends_used_term:
             friend_actions_with_term = len(friends_used_term[friend])
@@ -152,24 +127,19 @@ class TwitterBot(object):
                 tweets = []
 
                 try:
-                    tweets = self.api.GetUserTimeline(count=200, user_id=friend, max_id=max_id,
-                                                      exclude_replies=False, include_rts=True)
-                    tweets_dict[friend] = tweets;
+                    tweets = self.pickle_dict.get("users_how").get(term).get("tweets")
                 except error.TwitterError as e:
                     self.add_error_log(e.message[1], "GetUserTimeline")
 
                 friends_with_knowledge += 1
                 total_of_specialization += friend_actions_with_term / len(tweets)
 
-        user_dict["tweets"] = tweets_dict;
-
         proportion_of_knowledge = friends_with_knowledge / len(friends)
-        user_dict["proportion_of_knowledge"] = proportion_of_knowledge
-
         level_of_specialization = total_of_specialization / len(friends)
-        user_dict["level_of_specialization"] = level_of_specialization
 
-        self.how_terms_dict[term] = user_dict
+        print(proportion_of_knowledge == self.pickle_dict.get("users_how").get(term).get("proportion_of_knowledge"))
+        print(level_of_specialization == self.pickle_dict.get("users_how").get(term).get("level_of_specialization"))
+        print("")
 
         # TODO-Eric descomentar
         # self.replies.reply_mention_how_many(mention.id, term, mention.user.screen_name, friends_with_knowledge,
