@@ -1,3 +1,4 @@
+import pickle;
 import random
 import time
 from datetime import datetime, timedelta
@@ -12,6 +13,14 @@ from whoknowsbot.mentions_replies import MentionsReplies
 
 
 class TwitterBot(object):
+    pickle_dict = {}
+
+    how_many_dict = {}
+    how_terms_dict = {}
+
+    who_knows_dict = {}
+    who_terms_dict = {}
+
     def __init__(self):
         self.api = twitter_connection.open_connection()
         self.replies = MentionsReplies(self.api)
@@ -27,6 +36,14 @@ class TwitterBot(object):
                 search_limit = self.get_search_limit()
                 new_mentions = self.get_bot_mentions(search_limit)
 
+                self.pickle_dict["mentions"] = new_mentions;
+
+
+                #
+                # f = open('store.pckl', 'rb')
+                # obj = pickle.load(f)
+                # f.close()
+
                 for mention in new_mentions:
                     tweet_text = mention.text
                     tweet_text_splitted = tweet_text.split(" ")
@@ -41,6 +58,13 @@ class TwitterBot(object):
                     else:
                         pass
 
+                self.pickle_dict["users_how"] = self.how_terms_dict
+                self.pickle_dict["users_who"] = self.who_terms_dict
+
+                f = open('ambiente_de_teste.pckl', 'wb')
+                pickle.dump(self.pickle_dict, f)
+                f.close()
+
                 time_after_processing = datetime.now()
                 processing_duration = (time_after_processing - time_before_processing).total_seconds()
                 {} if processing_duration > 60 else time.sleep(60 - processing_duration)
@@ -54,15 +78,21 @@ class TwitterBot(object):
         term = mention.hashtags[0].text
         user_name = mention.user.screen_name
         user_id = mention.user.id
+        user_dict = {}
 
         print("Analisando menção de: " + str(user_name) + " | QUEMSABE")
 
         followers = self.get_user_base(user_id, "followers")
+        self.pickle_dict["followers"] = followers
+
         followers_used_term = self.get_users_posts_term(followers, term)
+        user_dict["followers_used_term"] = followers_used_term
+
         lowest_timestamp = self.get_lowest_timestamp(followers_used_term)
 
         if lowest_timestamp == 9999999999999:
-            self.replies.reply_mention_who_know(mention.id, term, mention.user.screen_name, None)
+            # self.replies.reply_mention_who_know(mention.id, term, mention.user.screen_name, None)
+            print("Caí na condição desconhecida do if")
         else:
             current_timestamp = self.get_current_timestamp()
             suitable_follower_score = 0
@@ -86,13 +116,22 @@ class TwitterBot(object):
                     suitable_follower_id = follower
 
             suitable_follower_screen_name = self.get_user_name(suitable_follower_id)
-            self.replies.reply_mention_who_know(mention.id, term, mention.user.screen_name,
-                                                suitable_follower_screen_name)
+
+            user_dict["suitable_follower_score"] = suitable_follower_score
+            user_dict["suitable_follower_id"] = suitable_follower_id
+            user_dict["suitable_follower_screen_name"] = suitable_follower_screen_name
+
+            self.who_terms_dict[term] = user_dict
+            # TODO-Eric descomentar
+            # self.replies.reply_mention_who_know(mention.id, term, mention.user.screen_name,
+            #                                     suitable_follower_screen_name)
 
     def how_many_knows(self, mention):
         term = mention.hashtags[0].text
         user_name = mention.user.screen_name
         user_id = mention.user.id
+        user_dict = {}
+        tweets_dict = {}
 
         print("Analisando menção de: " + str(user_name) + " | QUANTOSSABEM")
 
@@ -100,7 +139,10 @@ class TwitterBot(object):
         total_of_specialization = 0
 
         friends = self.get_user_base(user_id, "friends")
+        self.pickle_dict["friends"] = friends
+
         friends_used_term = self.get_users_posts_term(friends, term)
+        user_dict["friends_used_term"] = friends_used_term
 
         for friend in friends_used_term:
             friend_actions_with_term = len(friends_used_term[friend])
@@ -112,17 +154,26 @@ class TwitterBot(object):
                 try:
                     tweets = self.api.GetUserTimeline(count=200, user_id=friend, max_id=max_id,
                                                       exclude_replies=False, include_rts=True)
+                    tweets_dict[friend] = tweets;
                 except error.TwitterError as e:
                     self.add_error_log(e.message[1], "GetUserTimeline")
 
                 friends_with_knowledge += 1
                 total_of_specialization += friend_actions_with_term / len(tweets)
 
-        proportion_of_knowledge = friends_with_knowledge / len(friends)
-        level_of_specialization = total_of_specialization / len(friends)
+        user_dict["tweets"] = tweets_dict;
 
-        self.replies.reply_mention_how_many(mention.id, term, mention.user.screen_name, friends_with_knowledge,
-                                            proportion_of_knowledge, level_of_specialization)
+        proportion_of_knowledge = friends_with_knowledge / len(friends)
+        user_dict["proportion_of_knowledge"] = proportion_of_knowledge
+
+        level_of_specialization = total_of_specialization / len(friends)
+        user_dict["level_of_specialization"] = level_of_specialization
+
+        self.how_terms_dict[term] = user_dict
+
+        # TODO-Eric descomentar
+        # self.replies.reply_mention_how_many(mention.id, term, mention.user.screen_name, friends_with_knowledge,
+        #                                     proportion_of_knowledge, level_of_specialization)
 
     def get_lowest_timestamp(self, users_used_term):
         lowest = 9999999999999
@@ -233,11 +284,12 @@ class TwitterBot(object):
                 max_id = mentions_collection[len(mentions) - 1].id - 1
 
         # Update value from since_id
-        if len(mentions_collection) > 0:
-            self.update_search_limit(mentions_collection[0].id)
-            print(str(len(mentions_collection)) + " menções coletadas. Limite de consulta atualizado")
-        else:
-            print("Não há novas menções")
+        # TODO-Eric Descomentar
+        # if len(mentions_collection) > 0:
+        #     self.update_search_limit(mentions_collection[0].id)
+        #     print(str(len(mentions_collection)) + " menções coletadas. Limite de consulta atualizado")
+        # else:
+        #     print("Não há novas menções")
 
         # Return mentions collected
         return mentions_collection

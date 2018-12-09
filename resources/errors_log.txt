@@ -1,1 +1,1 @@
-
+2018-11-12 01:29:59.325430 - Listener: HTTPSConnectionPool(host='api.twitter.com', port=443): Max retries exceeded with url: /1.1/statuses/mentions_timeline.json?contributor_details=False&include_entities=True&max_id=9000000000000000000&since_id=1061802244851548161&trim_user=False&count=200&tweet_mode=compat (Caused by NewConnectionError('<urllib3.connection.VerifiedHTTPSConnection object at 0x000002EF66100198>: Failed to establish a new connection: [Errno 11001] getaddrinfo failed'))
