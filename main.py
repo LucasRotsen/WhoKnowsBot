@@ -1,4 +1,4 @@
-import pickle;
+import pickle
 import random
 import time
 from datetime import datetime, timedelta
@@ -36,13 +36,7 @@ class TwitterBot(object):
                 search_limit = self.get_search_limit()
                 new_mentions = self.get_bot_mentions(search_limit)
 
-                self.pickle_dict["mentions"] = new_mentions;
-
-
-                #
-                # f = open('store.pckl', 'rb')
-                # obj = pickle.load(f)
-                # f.close()
+                self.pickle_dict["mentions"] = new_mentions
 
                 for mention in new_mentions:
                     tweet_text = mention.text
@@ -109,7 +103,9 @@ class TwitterBot(object):
                         score = score + 0.75
 
                     tweet_timestamp = self.convert_to_timestamp(tweet.created_at)
-                    score = score + (1 - (current_timestamp - tweet_timestamp) / (current_timestamp - lowest_timestamp))
+
+                    # TODO: Comentar p/ execução de teste. Valor é volátil por pegar tempo do sistema.
+                    # score = score + (1 - (current_timestamp - tweet_timestamp) / (current_timestamp - lowest_timestamp))
 
                 if score > suitable_follower_score:
                     suitable_follower_score = score
@@ -117,9 +113,11 @@ class TwitterBot(object):
 
             suitable_follower_screen_name = self.get_user_name(suitable_follower_id)
 
-            user_dict["suitable_follower_score"] = suitable_follower_score
-            user_dict["suitable_follower_id"] = suitable_follower_id
+            user_dict["suitable_follower_score"] = ("%.3f" % suitable_follower_score)
+            user_dict["suitable_follower_id"] = str(suitable_follower_id)
             user_dict["suitable_follower_screen_name"] = suitable_follower_screen_name
+
+            suitable_follower_score = ("%.3f" % suitable_follower_score)
 
             self.who_terms_dict[term] = user_dict
             # TODO-Eric descomentar
@@ -154,20 +152,21 @@ class TwitterBot(object):
                 try:
                     tweets = self.api.GetUserTimeline(count=200, user_id=friend, max_id=max_id,
                                                       exclude_replies=False, include_rts=True)
-                    tweets_dict[friend] = tweets;
+                    tweets_dict[friend] = tweets
                 except error.TwitterError as e:
+
                     self.add_error_log(e.message[1], "GetUserTimeline")
 
                 friends_with_knowledge += 1
                 total_of_specialization += friend_actions_with_term / len(tweets)
 
-        user_dict["tweets"] = tweets_dict;
+        user_dict["tweets"] = tweets_dict
 
         proportion_of_knowledge = friends_with_knowledge / len(friends)
-        user_dict["proportion_of_knowledge"] = proportion_of_knowledge
+        user_dict["proportion_of_knowledge"] = ("%.3f" % proportion_of_knowledge)
 
         level_of_specialization = total_of_specialization / len(friends)
-        user_dict["level_of_specialization"] = level_of_specialization
+        user_dict["level_of_specialization"] = ("%.3f" % level_of_specialization)
 
         self.how_terms_dict[term] = user_dict
 
