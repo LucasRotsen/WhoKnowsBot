@@ -89,13 +89,16 @@ class TwitterBot(object):
                         score = score + 0.75
 
                     tweet_timestamp = self.convert_to_timestamp(tweet.created_at)
-                    score = score + (1 - (current_timestamp - tweet_timestamp) / (current_timestamp - lowest_timestamp))
+
+                    # TODO: Comentar p/ execução de teste. Valor é volátil por pegar tempo do sistema.
+                    # score = score + (1 - (current_timestamp - tweet_timestamp) / (current_timestamp - lowest_timestamp))
 
                 if score > suitable_follower_score:
                     suitable_follower_score = score
                     suitable_follower_id = follower
 
-            print(suitable_follower_id == self.pickle_dict.get("users_who").get(term).get("suitable_follower_id"))
+            suitable_follower_score = ("%.3f" % suitable_follower_score)
+            print(str(suitable_follower_id) == self.pickle_dict.get("users_who").get(term).get("suitable_follower_id"))
             print(suitable_follower_score == self.pickle_dict.get("users_who").get(term).get("suitable_follower_score"))
             print("")
 
@@ -127,15 +130,15 @@ class TwitterBot(object):
                 tweets = []
 
                 try:
-                    tweets = self.pickle_dict.get("users_how").get(term).get("tweets")
+                    tweets = self.pickle_dict.get("users_how").get(term).get("tweets").get(friend)
                 except error.TwitterError as e:
                     self.add_error_log(e.message[1], "GetUserTimeline")
 
                 friends_with_knowledge += 1
                 total_of_specialization += friend_actions_with_term / len(tweets)
 
-        proportion_of_knowledge = friends_with_knowledge / len(friends)
-        level_of_specialization = total_of_specialization / len(friends)
+        proportion_of_knowledge = ("%.3f" % (friends_with_knowledge / len(friends)))
+        level_of_specialization = ("%.3f" % (total_of_specialization / len(friends)))
 
         print(proportion_of_knowledge == self.pickle_dict.get("users_how").get(term).get("proportion_of_knowledge"))
         print(level_of_specialization == self.pickle_dict.get("users_how").get(term).get("level_of_specialization"))
