@@ -1,12 +1,11 @@
+import random
 import time
+
+from configuration.bot_config import verbose
 from datetime import datetime, timedelta
 from time import strptime
-
 from twitter import error
-
-from utils import file_utility
-from utils import text_utility
-from utils import time_utility
+from utils import file_utility, text_utility, time_utility
 
 
 def get_mentions(api, search_limit: int):
@@ -37,10 +36,12 @@ def get_mentions(api, search_limit: int):
     # Update value from since_id
     if len(mentions_collection) > 0:
         file_utility.write('resources/search_limit.txt', mentions_collection[0].id)
-        print(str(len(mentions_collection)) + " menções coletadas. Limite de consulta atualizado")
 
-    else:
-        print("Não há novas menções")
+        if verbose:
+            print(str(len(mentions_collection)) + " menções coletadas. Limite de consulta atualizado.")
+
+    elif verbose:
+        print("Não há novas menções.")
 
     # Return mentions collected
     return mentions_collection
@@ -58,6 +59,21 @@ def get_oldest_tweet_timestamp(users_used_term):
 
     # Return the lowest timestamp among all posts analysed
     return lowest
+
+
+def get_user_base(api, user_id, collect_from):
+    # Get user base according type of analysis
+    user_base = None
+    if collect_from == "friends":
+        user_base = api.GetFriendIDs(user_id=user_id)
+    elif collect_from == "followers":
+        user_base = api.GetFollowerIDs(user_id=user_id)
+
+    # Get posts no more than 100 people
+    if len(user_base) > 100:
+        user_base = random.sample(user_base, 100)
+
+    return user_base
 
 
 def get_user_name(api, user_id: str) -> str:
