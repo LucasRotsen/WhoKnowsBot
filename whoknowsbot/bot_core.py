@@ -1,42 +1,27 @@
 from configuration.bot_config import verbose
-from datetime import datetime
-from twitter import error
-from utils import file_utility, time_utility, twitter_utility
+from utils import time_utility, twitter_utility
 
 
-def how_many_knows(api, mention):
+def how_many_knows(api, term, user_id, user_name):
     if verbose:
         print("Iniciando análise | QUANTOSSABEM")
-        print("Usuário: " + str(mention.user.screen_name) + ". Termo: " + mention.hashtags[0].text + ".")
+        print("Usuário: " + str(user_name) + ". Termo: " + term + ".")
 
     data = {}
-
-    term = mention.hashtags[0].text
-    user_name = mention.user.screen_name
-    user_id = mention.user.id
 
     friends_with_knowledge = 0
     total_of_specialization = 0
 
     friends = twitter_utility.get_user_base(api, user_id, "friends")
-    friends_used_term = twitter_utility.get_users_posts_term(api, friends, term)
+    friends_posts = twitter_utility.get_users_posts_term(api, friends, term)
+    friends_used_term = get_users_who_used_term(friends_posts)
 
     for friend in friends_used_term:
         friend_actions_with_term = len(friends_used_term[friend])
 
         if friend_actions_with_term > 0:
-            max_id = 9000000000000000000
-            tweets = []
-
-            try:
-                tweets = api.GetUserTimeline(count=200, user_id=friend, max_id=max_id,
-                                             exclude_replies=False, include_rts=True)
-            except error.TwitterError as e:
-                message = str(datetime.now()) + " - " + "GetUserTimeline" + ": " + e.message[1] + "\n"
-                file_utility.append('resources/errors_log.txt', message)
-
             friends_with_knowledge += 1
-            total_of_specialization += friend_actions_with_term / len(tweets)
+            total_of_specialization += friend_actions_with_term / friends_posts[friend][1]
 
     proportion_of_knowledge = friends_with_knowledge / len(friends)
     level_of_specialization = total_of_specialization / len(friends)
@@ -52,28 +37,23 @@ def how_many_knows(api, mention):
     data["level_of_specialization"] = level_of_specialization
 
     if verbose:
+        print(data)
         print("Análise concluída." + "\n")
 
     return data
 
 
-def who_knows(api, mention):
+def who_knows(api, term, user_id, user_name):
     if verbose:
         print("Iniciando análise | QUEMSABE")
-        print("Usuário: " + str(mention.user.screen_name) + ". Termo: " + mention.hashtags[0].text + ".")
+        print("Usuário: " + str(user_name) + ". Termo: " + term + ".")
 
-    data = {}
-
-    term = mention.hashtags[0].text
-    user_id = mention.user.id
-    user_name = mention.user.screen_name
-
-    data["term"] = term
-    data["user_id"] = user_id
-    data["user_name"] = user_name
+    data = {"term": term, "user_id": user_id, "user_name": user_name}
 
     followers = twitter_utility.get_user_base(api, user_id, "followers")
-    followers_used_term = twitter_utility.get_users_posts_term(api, followers, term)
+    followers_post = twitter_utility.get_users_posts_term(api, followers, term)
+    followers_used_term = get_users_who_used_term(followers_post)
+
     lowest_timestamp = twitter_utility.get_oldest_tweet_timestamp(followers_used_term)
 
     if lowest_timestamp != 9999999999999:
@@ -110,6 +90,17 @@ def who_knows(api, mention):
         data["suitable_follower_screen_name"] = suitable_follower_screen_name
 
     if verbose:
+        print(data)
         print("Análise concluída." + "\n")
 
     return data
+
+
+def get_users_who_used_term(users):
+    users_who_used_term = {}
+
+    for user in users:
+        if len(users[user][0]) > 0:
+            users_who_used_term[user] = users[user][0]
+
+    return users_who_used_term

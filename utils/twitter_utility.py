@@ -1,10 +1,11 @@
 import random
 import time
-
-from configuration.bot_config import verbose
 from datetime import datetime, timedelta
 from time import strptime
+
 from twitter import error
+
+from configuration.bot_config import verbose
 from utils import file_utility, text_utility, time_utility
 
 
@@ -86,6 +87,16 @@ def get_user_name(api, user_id: str) -> str:
         file_utility.append('resources/errors_log.txt', message)
 
 
+def get_user_id(api, user_name: str) -> str:
+    try:
+        user = api.GetUser(screen_name=user_name)
+        return user.id
+
+    except error.TwitterError as e:
+        message = str(datetime.now()) + " - " + "Getting user id on 'TwitterUtility'" + ": " + e.message[1] + "\n"
+        file_utility.append('resources/errors_log.txt', message)
+
+
 def get_users_posts_term(api, user_base, term):
     dic_users_used_term = {}
 
@@ -97,6 +108,7 @@ def get_users_posts_term(api, user_base, term):
         tweets = []
         max_id = 9000000000000000000
         current_time_line = []
+        num_tweets = 0
 
         while True:
             time.sleep(1)
@@ -125,6 +137,7 @@ def get_users_posts_term(api, user_base, term):
                     else:
                         break
 
+            num_tweets += len(current_time_line)
             # Stop the reading if the user time line finish
             if len(current_time_line) == 0:
                 break
@@ -142,6 +155,6 @@ def get_users_posts_term(api, user_base, term):
                     if len(current_time_line) > 0:
                         max_id = current_time_line[len(current_time_line) - 1].id - 1
 
-        dic_users_used_term[user] = tweets
+        dic_users_used_term[user] = [tweets, num_tweets]
 
     return dic_users_used_term
