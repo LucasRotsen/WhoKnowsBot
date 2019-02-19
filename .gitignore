@@ -114,9 +114,8 @@ dmypy.json
 .pyre/
 
 # Project stuff
-twitter_connection.py
-error_log.txt
 errors_log.txt
 search_limit.txt
+result.txt
 /.vs
 /WhoKnowsBot.pyproj
