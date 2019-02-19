@@ -5,7 +5,7 @@ from time import strptime
 
 from twitter import error
 
-from configuration.bot_config import verbose
+from configuration.bot_config import development, verbose
 from utils import file_utility, text_utility, time_utility
 
 
@@ -36,7 +36,8 @@ def get_mentions(api, search_limit: int):
 
     # Update value from since_id
     if len(mentions_collection) > 0:
-        file_utility.write('resources/search_limit.txt', mentions_collection[0].id)
+        if not development:
+            file_utility.write('resources/search_limit.txt', mentions_collection[0].id)
 
         if verbose:
             print(str(len(mentions_collection)) + " menções coletadas. Limite de consulta atualizado.")

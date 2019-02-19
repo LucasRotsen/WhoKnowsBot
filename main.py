@@ -1,7 +1,7 @@
 import sys
 
 from configuration import twitter_connection
-from configuration.bot_config import verbose
+from configuration.bot_config import development, verbose
 from whoknowsbot.console import get_user_data_with_term
 from whoknowsbot.listener import listener
 
@@ -13,6 +13,9 @@ def main():
         print("Conectado com sucesso.")
 
     if len(sys.argv) == 1:
+        if development:
+            print("Modo de desenvolvimento está ativado. Você pode alterar isso no arquivo: 'bot_config.py'. \n")
+
         listener(api)
 
     elif len(sys.argv) == 3:
