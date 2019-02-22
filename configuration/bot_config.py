@@ -2,4 +2,4 @@
 development = True
 
 # verbose mode prints on the console the algorithm's current step.
-verbose = False
+verbose = True

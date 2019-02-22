@@ -159,3 +159,64 @@ def get_users_posts_term(api, user_base, term):
         dic_users_used_term[user] = [tweets, num_tweets]
 
     return dic_users_used_term
+
+
+def get_users_posts(api, user_base):
+    dic_users_posts = {}
+
+    # Get the date from 7 days ago
+    limit_date = datetime.strptime(str(datetime.now()),
+                                   '%Y-%m-%d %H:%M:%S.%f') - timedelta(days=1)
+
+    for user in user_base:
+        tweets = []
+        max_id = 9000000000000000000
+        current_time_line = []
+
+        while True:
+            time.sleep(1)
+
+            try:
+                current_time_line = api.GetUserTimeline(count=200, user_id=user, max_id=max_id,
+                                                        exclude_replies=False, include_rts=True)
+            except error.TwitterError as e:
+                message = str(datetime.now()) + " - " + "GetUserTimeline" + ": " + e.message[1] + "\n"
+                file_utility.append('resources/errors_log.txt', message)
+
+            # For each post collected...
+            for tweet in current_time_line:
+                # Get when the tweet was created in format yyyy-mm-dd HH-MM-SS
+                created = tweet.created_at.split(" ")
+                tweet_date = created[5] + "-" + str(strptime(created[1], '%b').tm_mon) + "-" + created[2] + \
+                             " " + created[3]
+                tweet_date = datetime.strptime(tweet_date, '%Y-%m-%d %H:%M:%S')
+
+                # If post is recenter than limitDate...
+                if tweet_date > limit_date:
+                    tweets.append(tweet)
+
+                else:
+                    break
+
+            # Stop the reading if the user time line finish
+            if len(current_time_line) == 0:
+                break
+
+            else:
+                # Get when a post was created in format YYYY-mm-dd HH-MM-SS
+                created = current_time_line[len(current_time_line) - 1].created_at.split(" ")
+                tweet_date = created[5] + "-" + str(strptime(created[1], '%b').tm_mon) + "-" + created[2] + \
+                             " " + created[3]
+                tweet_date = datetime.strptime(tweet_date, '%Y-%m-%d %H:%M:%S')
+
+                # Define a new limit for search user time line
+                if tweet_date < limit_date:
+                    break
+
+                else:
+                    if len(current_time_line) > 0:
+                        max_id = current_time_line[len(current_time_line) - 1].id - 1
+
+        dic_users_posts[user] = tweets
+
+    return dic_users_posts

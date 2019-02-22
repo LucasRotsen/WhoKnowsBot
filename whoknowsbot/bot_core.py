@@ -1,5 +1,7 @@
+import pickle
+
 from configuration.bot_config import verbose
-from utils import time_utility, twitter_utility
+from utils import text_utility, time_utility, twitter_utility
 
 
 def how_many_knows(api, term, user_id, user_name):
@@ -94,6 +96,50 @@ def who_knows(api, term, user_id, user_name):
         print("Análise concluída." + "\n")
 
     return data
+
+
+def most_used_terms(api, user_id, user_name):
+    if verbose:
+        print("Iniciando análise | TERMOSMAISUSADOS")
+        print("Usuário: " + str(user_name))
+
+    data = {"user_id": user_id, "user_name": user_name}
+
+    # friends = twitter_utility.get_user_base(api, user_id, "friends")
+    # friends_posts = twitter_utility.get_users_posts(api, friends)
+    #
+    # tweets_en = []
+    # tweets_pt = []
+    #
+    # for friend in friends_posts:
+    #     posts = friends_posts[friend]
+    #
+    #     for post in posts:
+    #         tweet = post.text
+    #         culture = post.lang
+    #
+    #         if culture == 'pt':
+    #             tweets_pt.append(tweet)
+    #
+    #         elif culture == 'en':
+    #             tweets_en.append(tweet)
+
+    f = open('tweets.pckl', 'rb')
+    pickle_dict = pickle.load(f)
+    f.close()
+
+    tweets_pt = pickle_dict["tweets_pt"]
+    tweets_en = pickle_dict["tweets_en"]
+
+    word_frequencies_pt = text_utility.get_filtered_words('portuguese', tweets_pt)
+    word_frequencies_en = text_utility.get_filtered_words('english', tweets_en)
+
+    words = word_frequencies_pt + word_frequencies_en
+    word_frequencies = text_utility.get_word_frequencies(words)
+
+    sorted_words_by_frequency = sorted(((value, key) for (key, value) in word_frequencies.items()), reverse=True)
+
+    return sorted_words_by_frequency
 
 
 def get_users_who_used_term(users):
