@@ -3,7 +3,7 @@ from datetime import datetime
 
 from configuration.bot_config import development
 from utils import file_utility, twitter_utility
-from whoknowsbot.bot_core import how_many_knows, who_knows
+from whoknowsbot.bot_core import how_many_knows, most_used_terms, who_knows
 from whoknowsbot.mentions_replies import reply
 
 
@@ -37,6 +37,15 @@ def listener(api):
 
                         if not development:
                             reply(api, data, mention, operation)
+
+                    elif operation == "TERMOSMAISUSADOS":
+                        data = most_used_terms(api, user_id, user_name)
+
+                        if not development:
+                            reply(api, data, mention, operation)
+
+                    elif not development:
+                        reply(api, data, mention, operation)
 
             time_after_processing = datetime.now()
             processing_duration = (time_after_processing - time_before_processing).total_seconds()

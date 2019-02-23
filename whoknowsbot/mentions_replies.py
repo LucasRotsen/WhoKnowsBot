@@ -4,6 +4,7 @@ from twitter import error
 
 from configuration.bot_config import verbose
 from utils import file_utility
+from utils.image_utility import get_wordcloud, save_wordcloud_image
 
 
 def reply(api, data, mention, operation):
@@ -30,14 +31,22 @@ def reply(api, data, mention, operation):
             reply_mention_who_know(api, mention.id, term, mention.user.screen_name,
                                    suitable_follower_screen_name)
 
+    elif operation == "TERMOSMAISUSADOS":
+        word_frequencies = data["word_frequency"]
+
+        reply_mention_most_used_terms(api, mention.id, mention.user.screen_name, word_frequencies)
+
+    else:
+        reply_invalid_tweet(api, mention.id, mention.user.screen_name)
+
 
 def reply_invalid_tweet(api, mention_id, user):
-    reply_invalid = "@" + user + " Ops @" + user + ", verifique se você tweetou como o exemplo que eu coloquei aqui: " \
-                                                   "https://twitter.com/WhoKnowsBot/status/1009919330006589440"
+    reply_invalid = "@" + user + " Ops @" + user + ", verifique se você tweetou de uma forma que eu consiga entender."
 
     # Post the reply on Twitter
     try:
         api.PostUpdate(status=reply_invalid, in_reply_to_status_id=mention_id)
+
     except error.TwitterError as e:
         message = str(datetime.now()) + " - " + "PostUpdate" + ": " + e.message + "\n"
         file_utility.append('resources/error_log.txt', message)
@@ -87,3 +96,20 @@ def reply_mention_who_know(api, mention_id, term, user, suitable_user):
     except error.TwitterError as e:
         message = str(datetime.now()) + " - " + "PostUpdate" + ": " + e.message + "\n"
         file_utility.append('resources/error_log.txt', message)
+
+
+def reply_mention_most_used_terms(api, mention_id, user, words_frequency):
+    wordcloud = get_wordcloud(words_frequency)
+    image_path = save_wordcloud_image(str(mention_id), "temp/", wordcloud)
+
+    try:
+        if verbose:
+            print("Respondendo usuário...")
+
+        api.PostUpdate(status="Essas são as palavras mais usadas na sua Timeline:", media=image_path,
+                       in_reply_to_status_id=mention_id, auto_populate_reply_metadata=True)
+    except error.TwitterError as e:
+        message = str(datetime.now()) + " - " + "PostUpdate" + ": " + e.message + "\n"
+        file_utility.append('resources/error_log.txt', message)
+
+    file_utility.delete_file(image_path)

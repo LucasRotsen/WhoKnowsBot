@@ -1,6 +1,4 @@
-import pickle
-
-from configuration.bot_config import verbose
+from configuration.bot_config import amount_of_terms_to_retrieve, verbose
 from utils import text_utility, time_utility, twitter_utility
 
 
@@ -105,41 +103,47 @@ def most_used_terms(api, user_id, user_name):
 
     data = {"user_id": user_id, "user_name": user_name}
 
-    # friends = twitter_utility.get_user_base(api, user_id, "friends")
-    # friends_posts = twitter_utility.get_users_posts(api, friends)
+    friends = twitter_utility.get_user_base(api, user_id, "friends")
+    friends_posts = twitter_utility.get_users_posts(api, friends)
+
+    tweets_en = []
+    tweets_pt = []
+
+    for friend in friends_posts:
+        posts = friends_posts[friend]
+
+        for post in posts:
+            tweet = post.text
+            culture = post.lang
+
+            if culture == 'pt':
+                tweets_pt.append(tweet)
+
+            elif culture == 'en':
+                tweets_en.append(tweet)
+
+    # f = open('tweets.pckl', 'rb')
+    # pickle_dict = pickle.load(f)
+    # f.close()
     #
-    # tweets_en = []
-    # tweets_pt = []
-    #
-    # for friend in friends_posts:
-    #     posts = friends_posts[friend]
-    #
-    #     for post in posts:
-    #         tweet = post.text
-    #         culture = post.lang
-    #
-    #         if culture == 'pt':
-    #             tweets_pt.append(tweet)
-    #
-    #         elif culture == 'en':
-    #             tweets_en.append(tweet)
+    # tweets_pt = pickle_dict["tweets_pt"]
+    # tweets_en = pickle_dict["tweets_en"]
 
-    f = open('tweets.pckl', 'rb')
-    pickle_dict = pickle.load(f)
-    f.close()
+    words_pt = text_utility.get_filtered_words('portuguese', tweets_pt)
+    words_en = text_utility.get_filtered_words('english', tweets_en)
 
-    tweets_pt = pickle_dict["tweets_pt"]
-    tweets_en = pickle_dict["tweets_en"]
+    words = words_pt + words_en
+    word_frequency = text_utility.get_word_frequency(words)
 
-    word_frequencies_pt = text_utility.get_filtered_words('portuguese', tweets_pt)
-    word_frequencies_en = text_utility.get_filtered_words('english', tweets_en)
+    sorted_words_by_frequency = sorted(((value, key) for (key, value) in word_frequency.items()), reverse=True)
+    trimmed_sorted_words_by_frequency = sorted_words_by_frequency[:amount_of_terms_to_retrieve]
 
-    words = word_frequencies_pt + word_frequencies_en
-    word_frequencies = text_utility.get_word_frequencies(words)
+    # swap keys with values and turn into a dictionary.
+    word_frequency_dict = dict((word[1], word[0]) for word in trimmed_sorted_words_by_frequency)
 
-    sorted_words_by_frequency = sorted(((value, key) for (key, value) in word_frequencies.items()), reverse=True)
+    data["word_frequency"] = word_frequency_dict
 
-    return sorted_words_by_frequency
+    return data
 
 
 def get_users_who_used_term(users):

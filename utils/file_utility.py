@@ -1,3 +1,6 @@
+import os
+
+
 def append(path: str, content: str):
     file = open(path, 'a')
     file.write(content)
@@ -15,3 +18,7 @@ def write(path: str, content: str):
     file = open(path, 'w')
     file.write(str(content))
     file.close()
+
+
+def delete_file(path: str):
+    os.remove(path)
