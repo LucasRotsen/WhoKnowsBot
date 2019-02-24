@@ -5,7 +5,7 @@ from time import strptime
 
 from twitter import error
 
-from configuration.bot_config import development, verbose
+from configuration.bot_config import verbose
 from utils import file_utility, text_utility, time_utility
 
 
@@ -34,13 +34,8 @@ def get_mentions(api, search_limit: int):
         else:
             max_id = mentions_collection[len(mentions) - 1].id - 1
 
-    # Update value from since_id
     if len(mentions_collection) > 0:
-        if not development:
-            file_utility.write('resources/search_limit.txt', mentions_collection[0].id)
-
-        if verbose:
-            print(str(len(mentions_collection)) + " menções coletadas. Limite de consulta atualizado.")
+        print(str(len(mentions_collection)) + " menções coletadas.") if verbose else None
 
     elif verbose:
         print("Não há novas menções.")
@@ -166,7 +161,7 @@ def get_users_posts(api, user_base):
 
     # Get the date from 7 days ago
     limit_date = datetime.strptime(str(datetime.now()),
-                                   '%Y-%m-%d %H:%M:%S.%f') - timedelta(days=1)
+                                   '%Y-%m-%d %H:%M:%S.%f') - timedelta(days=7)
 
     for user in user_base:
         tweets = []

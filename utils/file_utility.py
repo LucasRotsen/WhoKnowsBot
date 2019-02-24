@@ -22,3 +22,11 @@ def write(path: str, content: str):
 
 def delete_file(path: str):
     os.remove(path)
+
+
+def check_and_create_folder(path: str):
+    try:
+        os.makedirs(path)
+    except FileExistsError:
+        # directory already exists
+        pass

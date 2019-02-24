@@ -1,7 +1,6 @@
 import time
 from datetime import datetime
 
-from configuration.bot_config import development
 from utils import file_utility, twitter_utility
 from whoknowsbot.bot_core import how_many_knows, most_used_terms, who_knows
 from whoknowsbot.mentions_replies import reply
@@ -15,41 +14,24 @@ def listener(api):
             search_limit = file_utility.read('resources/search_limit.txt')
             new_mentions = twitter_utility.get_mentions(api, search_limit)
 
-            for mention in new_mentions:
+            # reversed is used to dispatch mentions in the order they are tweeted.
+            for mention in reversed(new_mentions):
                 tweet_text = mention.text
                 tweet_text_splitted = tweet_text.split(" ")
 
-                if len(mention.hashtags) > 0:
-                    term = mention.hashtags[0].text
-                    user_id = mention.user.id
-                    user_name = mention.user.screen_name
+                term = mention.hashtags[0].text if len(mention.hashtags) > 0 else None
+                user_id = mention.user.id
+                user_name = mention.user.screen_name
+                operation = tweet_text_splitted[1].upper()
 
-                    operation = tweet_text_splitted[1].upper()
+                dispatcher(api, mention, operation, term, user_id, user_name)
 
-                    if operation == "QUANTOSSABEM":
-                        data = how_many_knows(api, term, user_id, user_name)
-
-                        if not development:
-                            reply(api, data, mention, operation)
-
-                    elif operation == "QUEMSABE":
-                        data = who_knows(api, term, user_id, user_name)
-
-                        if not development:
-                            reply(api, data, mention, operation)
-
-                    elif operation == "TERMOSMAISUSADOS":
-                        data = most_used_terms(api, user_id, user_name)
-
-                        if not development:
-                            reply(api, data, mention, operation)
-
-                    elif not development:
-                        reply(api, data, mention, operation)
+                # update value of last processed mention
+                file_utility.write('resources/search_limit.txt', mention.id)
 
             time_after_processing = datetime.now()
             processing_duration = (time_after_processing - time_before_processing).total_seconds()
-            {} if processing_duration > 60 else time.sleep(60 - processing_duration)
+            None if processing_duration > 60 else time.sleep(60 - processing_duration)
 
         # If something happens with the network, sleep for 1 minute and restart bot.
         except ConnectionError as e:
@@ -57,3 +39,27 @@ def listener(api):
             file_utility.append('resources/errors_log.txt', message)
 
             time.sleep(60)
+
+
+def dispatcher(api, mention, operation, term, user_id, user_name):
+    data = None
+
+    if operation == "QUANTOSSABEM":
+        data = how_many_knows(api, term, user_id, user_name)
+
+    elif operation == "QUEMSABE":
+        data = who_knows(api, term, user_id, user_name)
+
+    elif operation == "TERMOSMAISUSADOS":
+        data = most_used_terms(api, user_id, user_name)
+
+    else:
+        operation = None
+
+    try:
+        reply(api, data, mention, operation)
+
+    except Exception as e:
+        # TODO tratar essa exceção esporádica
+        message = str(datetime.now()) + " - " + "Dispatcher" + ": " + e.args[0].args[0] + "\n"
+        file_utility.append('resources/errors_log.txt', message)

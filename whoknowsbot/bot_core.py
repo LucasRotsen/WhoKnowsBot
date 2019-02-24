@@ -122,13 +122,6 @@ def most_used_terms(api, user_id, user_name):
             elif culture == 'en':
                 tweets_en.append(tweet)
 
-    # f = open('tweets.pckl', 'rb')
-    # pickle_dict = pickle.load(f)
-    # f.close()
-    #
-    # tweets_pt = pickle_dict["tweets_pt"]
-    # tweets_en = pickle_dict["tweets_en"]
-
     words_pt = text_utility.get_filtered_words('portuguese', tweets_pt)
     words_en = text_utility.get_filtered_words('english', tweets_en)
 
@@ -142,6 +135,10 @@ def most_used_terms(api, user_id, user_name):
     word_frequency_dict = dict((word[1], word[0]) for word in trimmed_sorted_words_by_frequency)
 
     data["word_frequency"] = word_frequency_dict
+
+    if verbose:
+        print(data)
+        print("Análise concluída." + "\n")
 
     return data
 

@@ -1,5 +1,7 @@
 from wordcloud import WordCloud
 
+from utils.file_utility import check_and_create_folder
+
 
 def get_wordcloud(dict):
     wordcloud = WordCloud(width=400, height=400,
@@ -11,6 +13,7 @@ def get_wordcloud(dict):
 
 def save_wordcloud_image(name, path, wordcloud):
     image_path = path + name + ".jpg"
+    check_and_create_folder(path)
     wordcloud.to_file(image_path)
 
     return image_path

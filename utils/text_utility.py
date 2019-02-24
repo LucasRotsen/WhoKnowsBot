@@ -6,6 +6,7 @@ from nltk.corpus import stopwords
 from nltk.tokenize import word_tokenize
 
 from configuration.bot_config import should_count_mentions
+from resources.custom_stopwords import custom_stopwords, custom_stopwords_pt
 
 
 def accent_remover(text: str):
@@ -18,13 +19,13 @@ def get_filtered_words(culture, phrases):
 
     # set the culture from which the stop words will be recovered.
     stop_words = set(stopwords.words(culture))
-    stop_words.update(custom_stop_words())
+    stop_words.update(get_custom_stopwords(culture))
 
     words = []
 
     for phrase in phrases:
-        mentions = re.findall(r'\w*\@\w*', phrase)
-        phrase_without_mentions = re.sub(r'\w*\@\w*', '', phrase)
+        mentions = re.findall(r'\w*@\w*', phrase)
+        phrase_without_mentions = re.sub(r'\w*@\w*', '', phrase)
 
         tokens = word_tokenize(phrase_without_mentions, language=culture)
 
@@ -46,12 +47,13 @@ def get_word_frequency(words):
     return dict((i, words.count(i)) for i in words)
 
 
-def custom_stop_words():
-    return ((
-        "rt",
-        "https",
-        "http"
-    ))
+def get_custom_stopwords(culture):
+    temp_custom_stopwords = custom_stopwords()
+
+    if culture == "portuguese":
+        temp_custom_stopwords += custom_stopwords_pt()
+
+    return temp_custom_stopwords
 
 
 def check_and_download_nltk_resources():
