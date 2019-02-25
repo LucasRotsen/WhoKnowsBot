@@ -81,7 +81,7 @@ def who_knows(api, term, user_id, user_name):
                 suitable_follower_score = score
                 suitable_follower_id = follower
 
-        suitable_follower_screen_name = twitter_utility.get_user_name(api, suitable_follower_id)
+        suitable_follower_screen_name = twitter_utility.retry_get_user_name(api, suitable_follower_id)
 
         data["followers"] = followers
         data["follower_used_term"] = followers_used_term

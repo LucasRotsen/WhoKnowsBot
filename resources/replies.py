@@ -11,10 +11,10 @@ def get_positive_how_many_reply(knowledge_str, specialization_str, term, user):
         .format(user=user, knowledge=knowledge_str, term=term, specialization=specialization_str)
 
 
-def get_positive_who_knows_reply(data, term, user):
+def get_positive_who_knows_reply(suitable_follower, term, user):
     return "Olá @{user}, entre seus seguidores quem mais sabe sobre #{term}" \
            " é @{name}. Diga-me, de 1 a 5, o quanto você concorda com esta resposta :)" \
-        .format(user=user, term=term, name=str(data["suitable_follower_screen_name"]))
+        .format(user=user, term=term, name=suitable_follower)
 
 
 def get_negative_who_knows_reply(term, user):

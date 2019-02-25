@@ -1,44 +1,40 @@
 import time
 from datetime import datetime
 
+import backoff
+from requests import RequestException
+
 from utils import file_utility, twitter_utility
 from whoknowsbot.bot_core import how_many_knows, most_used_terms, who_knows
 from whoknowsbot.mentions_replies import reply
 
 
+@backoff.on_exception(backoff.expo, RequestException, jitter=backoff.full_jitter, on_backoff=log_retry)
 def listener(api):
     while True:
-        try:
-            time_before_processing = datetime.now()
+        time_before_processing = datetime.now()
 
-            search_limit = file_utility.read('resources/search_limit.txt')
-            new_mentions = twitter_utility.get_mentions(api, search_limit)
+        search_limit = file_utility.read('resources/search_limit.txt')
+        new_mentions = twitter_utility.get_mentions(api, search_limit)
 
-            # reversed is used to dispatch mentions in the order they are tweeted.
-            for mention in reversed(new_mentions):
-                tweet_text = mention.text
-                tweet_text_splitted = tweet_text.split(" ")
+        # reversed is used to dispatch mentions in the order they are tweeted.
+        for mention in reversed(new_mentions):
+            tweet_text = mention.text
+            tweet_text_splitted = tweet_text.split(" ")
 
-                term = mention.hashtags[0].text if len(mention.hashtags) > 0 else None
-                user_id = mention.user.id
-                user_name = mention.user.screen_name
-                operation = tweet_text_splitted[1].upper()
+            term = mention.hashtags[0].text if len(mention.hashtags) > 0 else None
+            user_id = mention.user.id
+            user_name = mention.user.screen_name
+            operation = tweet_text_splitted[1].upper()
 
-                dispatcher(api, mention, operation, term, user_id, user_name)
+            dispatcher(api, mention, operation, term, user_id, user_name)
 
-                # update value of last processed mention
-                file_utility.write('resources/search_limit.txt', mention.id)
+            # update value of last processed mention
+            file_utility.write('resources/search_limit.txt', mention.id)
 
-            time_after_processing = datetime.now()
-            processing_duration = (time_after_processing - time_before_processing).total_seconds()
-            None if processing_duration > 60 else time.sleep(60 - processing_duration)
-
-        # If something happens with the network, sleep for 1 minute and restart bot.
-        except ConnectionError as e:
-            message = str(datetime.now()) + " - " + "Listener" + ": " + e.args[0].args[0] + "\n"
-            file_utility.append('resources/errors_log.txt', message)
-
-            time.sleep(60)
+        time_after_processing = datetime.now()
+        processing_duration = (time_after_processing - time_before_processing).total_seconds()
+        None if processing_duration > 60 else time.sleep(60 - processing_duration)
 
 
 def dispatcher(api, mention, operation, term, user_id, user_name):
@@ -56,10 +52,4 @@ def dispatcher(api, mention, operation, term, user_id, user_name):
     else:
         operation = None
 
-    try:
-        reply(api, data, mention, operation)
-
-    except Exception as e:
-        # TODO tratar essa exceção esporádica
-        message = str(datetime.now()) + " - " + "Dispatcher" + ": " + e.args[0].args[0] + "\n"
-        file_utility.append('resources/errors_log.txt', message)
+    reply(api, data, mention, operation)

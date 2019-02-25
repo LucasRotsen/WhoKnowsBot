@@ -9,8 +9,7 @@ from whoknowsbot.listener import listener
 def main():
     api = twitter_connection.open_connection()
 
-    if verbose:
-        print("Conectado com sucesso.")
+    print("API configurada com sucesso.") if verbose else None
 
     if len(sys.argv) == 1:
         listener(api)

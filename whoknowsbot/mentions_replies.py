@@ -1,11 +1,11 @@
-from datetime import datetime
-
 from twitter import error
 
 from configuration.bot_config import verbose
 from resources.replies import *
-from utils import file_utility
+from utils.file_utility import delete_file
 from utils.image_utility import get_wordcloud, save_wordcloud_image
+from utils.log_utility import log_error
+from utils.twitter_utility import retry_post_update
 
 
 def reply(api, data, mention, operation):
@@ -40,17 +40,15 @@ def reply_mention_how_many(api, data, mention):
     else:
         reply_how_many = get_positive_how_many_reply(knowledge_str, specialization_str, term, user)
 
+    print("Respondendo usuário...") if verbose else None
+
     # Post the reply on Twitter
     try:
-        print("Respondendo usuário...") if verbose else None
-
-        api.PostUpdate(status=reply_how_many, in_reply_to_status_id=mention_id, auto_populate_reply_metadata=True)
-
+        retry_post_update(api, reply_how_many, mention_id)
         print("Resposta enviada. \n") if verbose else None
 
     except error.TwitterError as e:
-        message = str(datetime.now()) + " - " + "PostUpdate" + ": " + e.message + "\n"
-        file_utility.append('resources/error_log.txt', message)
+        log_error(e.message, "Reply_Mention_How_Many")
 
 
 def reply_mention_who_know(api, data, mention):
@@ -60,22 +58,20 @@ def reply_mention_who_know(api, data, mention):
     term = data["term"]
 
     if "suitable_follower_screen_name" in data:
-        reply_who_know = get_positive_who_knows_reply(data, term, user)
+        reply_who_know = get_positive_who_knows_reply(str(data["suitable_follower_screen_name"]), term, user)
 
     else:
         reply_who_know = get_negative_who_knows_reply(term, user)
 
+    print("Respondendo usuário...") if verbose else None
+
     # Post the reply on Twitter
     try:
-        print("Respondendo usuário...") if verbose else None
-
-        api.PostUpdate(status=reply_who_know, in_reply_to_status_id=mention_id, auto_populate_reply_metadata=True)
-
+        retry_post_update(api, reply_who_know, mention_id)
         print("Resposta enviada. \n") if verbose else None
 
     except error.TwitterError as e:
-        message = str(datetime.now()) + " - " + "PostUpdate" + ": " + e.message + "\n"
-        file_utility.append('resources/error_log.txt', message)
+        log_error(e.message, "Reply_Mention_Who_Know")
 
 
 def reply_mention_most_used_terms(api, data, mention):
@@ -89,19 +85,16 @@ def reply_mention_most_used_terms(api, data, mention):
 
     reply_most_used_terms = get_most_used_terms_reply(user)
 
+    print("Respondendo usuário...") if verbose else None
+
     try:
-        print("Respondendo usuário...") if verbose else None
-
-        api.PostUpdate(status=reply_most_used_terms, media=image_path,
-                       in_reply_to_status_id=mention_id, auto_populate_reply_metadata=True)
-
+        retry_post_update(api, reply_most_used_terms, mention_id, image_path)
         print("Resposta enviada. \n") if verbose else None
 
     except error.TwitterError as e:
-        message = str(datetime.now()) + " - " + "PostUpdate" + ": " + e.message + "\n"
-        file_utility.append('resources/error_log.txt', message)
+        log_error(e.message, "Reply_Mention_Most_Used_Terms")
 
-    file_utility.delete_file(image_path)
+    delete_file(image_path)
 
 
 def reply_invalid_tweet(api, mention):
@@ -110,14 +103,12 @@ def reply_invalid_tweet(api, mention):
 
     reply_invalid = get_invalid_tweet_reply(user)
 
+    print("Respondendo usuário...") if verbose else None
+
     # Post the reply on Twitter
     try:
-        print("Respondendo usuário...") if verbose else None
-
-        api.PostUpdate(status=reply_invalid, in_reply_to_status_id=mention_id, auto_populate_reply_metadata=True)
-
+        retry_post_update(api, reply_invalid, mention_id)
         print("Resposta enviada. \n") if verbose else None
 
     except error.TwitterError as e:
-        message = str(datetime.now()) + " - " + "PostUpdate" + ": " + e.message + "\n"
-        file_utility.append('resources/error_log.txt', message)
+        log_error(e.message, "Reply_Invalid_Tweet")
