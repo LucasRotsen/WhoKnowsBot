@@ -6,7 +6,7 @@ from nltk.corpus import stopwords
 from nltk.tokenize import word_tokenize
 
 from configuration.bot_config import should_count_mentions
-from resources.custom_stopwords import custom_stopwords, custom_stopwords_pt
+from resources.text.custom_stopwords import custom_stopwords, custom_stopwords_pt
 
 
 def accent_remover(text: str):
@@ -19,6 +19,8 @@ def get_filtered_words(culture, phrases):
 
     # set the culture from which the stop words will be recovered.
     stop_words = set(stopwords.words(culture))
+
+    # extend the lib's stopwords with the ones specified on 'custom_stopwords' file.
     stop_words.update(get_custom_stopwords(culture))
 
     words = []

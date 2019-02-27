@@ -1,15 +1,11 @@
 import time
 from datetime import datetime
 
-import backoff
-from requests import RequestException
-
 from utils import file_utility, twitter_utility
-from whoknowsbot.bot_core import how_many_knows, most_used_terms, who_knows
-from whoknowsbot.mentions_replies import reply
+from whoknowsbot.core import how_many_knows, most_used_terms, who_knows
+from whoknowsbot.twitter.reply import reply
 
 
-@backoff.on_exception(backoff.expo, RequestException, jitter=backoff.full_jitter, on_backoff=log_retry)
 def listener(api):
     while True:
         time_before_processing = datetime.now()

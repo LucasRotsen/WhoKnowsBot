@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="f1b51c55-c3fa-49d6-9473-d4d65e2babd6" name="Default Changelist" comment="Improved a lot of stuff">
-      <change afterPath="$PROJECT_DIR$/resources/retries_log.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/utils/log_utility.py" afterDir="false" />
+    <list default="true" id="f1b51c55-c3fa-49d6-9473-d4d65e2babd6" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Pipfile" beforeDir="false" afterPath="$PROJECT_DIR$/Pipfile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Pipfile.lock" beforeDir="false" afterPath="$PROJECT_DIR$/Pipfile.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/errors_log.txt" beforeDir="false" afterPath="$PROJECT_DIR$/resources/errors_log.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/replies.py" beforeDir="false" afterPath="$PROJECT_DIR$/resources/replies.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/search_limit.txt" beforeDir="false" afterPath="$PROJECT_DIR$/resources/search_limit.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/custom_stopwords.py" beforeDir="false" afterPath="$PROJECT_DIR$/resources/text/custom_stopwords.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/errors_log.txt" beforeDir="false" afterPath="$PROJECT_DIR$/utils/retryable_utility.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/replies.py" beforeDir="false" afterPath="$PROJECT_DIR$/resources/text/replies.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/retries_log.txt" beforeDir="false" afterPath="$PROJECT_DIR$/resources/log/retries_log.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/wordcloud-1.5.0-cp37-cp37m-win32.whl" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/utils/log_utility.py" beforeDir="false" afterPath="$PROJECT_DIR$/utils/log_utility.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/utils/text_utility.py" beforeDir="false" afterPath="$PROJECT_DIR$/utils/text_utility.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/utils/twitter_utility.py" beforeDir="false" afterPath="$PROJECT_DIR$/utils/twitter_utility.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/whoknowsbot/bot_core.py" beforeDir="false" afterPath="$PROJECT_DIR$/whoknowsbot/bot_core.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/whoknowsbot/console.py" beforeDir="false" afterPath="$PROJECT_DIR$/whoknowsbot/console.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/whoknowsbot/listener.py" beforeDir="false" afterPath="$PROJECT_DIR$/whoknowsbot/listener.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/whoknowsbot/mentions_replies.py" beforeDir="false" afterPath="$PROJECT_DIR$/whoknowsbot/mentions_replies.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/whoknowsbot/bot_core.py" beforeDir="false" afterPath="$PROJECT_DIR$/whoknowsbot/core.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/whoknowsbot/console.py" beforeDir="false" afterPath="$PROJECT_DIR$/whoknowsbot/console/console.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/whoknowsbot/listener.py" beforeDir="false" afterPath="$PROJECT_DIR$/whoknowsbot/twitter/listener.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/whoknowsbot/mentions_replies.py" beforeDir="false" afterPath="$PROJECT_DIR$/whoknowsbot/twitter/reply.py" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/venv/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -25,7 +25,7 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="CoverageDataManager">
-    <SUITE FILE_PATH="coverage/WhoKnowsBot$Application.coverage" NAME="Application Coverage Results" MODIFIED="1551135857321" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/WhoKnowsBot$Application.coverage" NAME="Application Coverage Results" MODIFIED="1551241771598" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
   <component name="DatabaseView">
     <option name="SHOW_INTERMEDIATE" value="true" />
@@ -44,112 +44,29 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/whoknowsbot/listener.py">
+        <entry file="file://$PROJECT_DIR$/whoknowsbot/twitter/listener.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="204">
-              <caret line="34" column="17" lean-forward="true" selection-start-line="34" selection-start-column="17" selection-end-line="34" selection-end-column="17" />
+            <state relative-caret-position="794">
+              <caret line="50" column="7" selection-start-line="50" selection-start-column="7" selection-end-line="50" selection-end-column="7" />
               <folding>
-                <element signature="e#0#14#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/main.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="187">
-              <caret line="11" column="39" selection-start-line="11" selection-start-column="39" selection-end-line="11" selection-end-column="39" />
-              <folding>
-                <element signature="e#0#10#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/whoknowsbot/console.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="238">
-              <caret line="14" selection-start-line="14" selection-end-line="14" />
-              <folding>
-                <element signature="e#0#36#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/utils/twitter_utility.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="437">
-              <caret line="238" selection-start-line="238" selection-end-line="239" />
-              <folding>
-                <element signature="e#0#14#0" expanded="true" />
-                <element signature="e#342#1244#0" />
-                <element signature="e#1300#1625#0" />
-                <element signature="e#1548#1927#0" />
-                <element signature="e#2539#5062#0" />
-                <element signature="e#5106#6301#0" />
-                <element signature="e#6137#6491#0" />
-                <element signature="e#6480#6749#0" />
-                <element signature="e#6662#6773#0" />
-                <element signature="e#6923#7042#0" />
-                <element signature="e#7089#7227#0" />
-                <element signature="e#7313#7415#0" />
-                <element signature="e#7563#7661#0" />
-                <element signature="e#7808#8015#0" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/whoknowsbot/bot_core.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="199">
-              <caret line="85" column="37" lean-forward="true" selection-start-line="85" selection-start-column="37" selection-end-line="85" selection-end-column="37" />
-              <folding>
-                <element signature="e#0#73#0" expanded="true" />
-                <element signature="e#207#1555#0" />
-                <element signature="e#3577#4973#0" />
-                <element signature="e#5016#5187#0" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/utils/text_utility.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state>
-              <caret line="8" column="76" lean-forward="true" selection-start-line="8" selection-start-column="76" selection-end-line="8" selection-end-column="76" />
-              <folding>
-                <element signature="e#305#385#0" />
-                <element signature="e#434#1407#0" />
-                <element signature="e#1445#1492#0" />
-                <element signature="e#1534#1698#0" />
-                <element signature="e#1746#1928#0" />
+                <element signature="e#0#11#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/resources/retries_log.txt">
-          <provider selected="true" editor-type-id="text-editor" />
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/resources/errors_log.txt">
-          <provider selected="true" editor-type-id="text-editor" />
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/utils/log_utility.py">
+        <entry file="file://$PROJECT_DIR$/utils/twitter_utility.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="65">
-              <caret line="15" column="101" selection-start-line="15" selection-start-column="101" selection-end-line="15" selection-end-column="101" />
+            <state relative-caret-position="68">
+              <caret line="4" column="44" selection-start-line="4" selection-start-column="44" selection-end-line="4" selection-end-column="44" />
+              <folding>
+                <element signature="e#301#1150#0" />
+                <element signature="e#1206#1531#0" />
+                <element signature="e#1585#2153#0" />
+                <element signature="e#4784#6331#0" />
+                <element signature="e#4797#5982#0" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -190,6 +107,11 @@
       <find>timeline</find>
       <find>retry_error_callback</find>
       <find>e</find>
+      <find>Request</find>
+      <find>lofingo</find>
+      <find>datet</find>
+      <find>time</find>
+      <find>time.</find>
     </findStrings>
     <replaceStrings>
       <replace>text</replace>
@@ -221,7 +143,6 @@
         <option value="$PROJECT_DIR$/configuration/twitter_connection.py" />
         <option value="$PROJECT_DIR$/Pipfile" />
         <option value="$PROJECT_DIR$/resources/custom_stopwords.py" />
-        <option value="$PROJECT_DIR$/utils/text_utility.py" />
         <option value="$PROJECT_DIR$/utils/file_utility.py" />
         <option value="$PROJECT_DIR$/utils/image_utility.py" />
         <option value="$PROJECT_DIR$/resources/reply_texts.py" />
@@ -229,14 +150,17 @@
         <option value="$PROJECT_DIR$/resources/replies.py" />
         <option value="$PROJECT_DIR$/resources/search_limit.txt" />
         <option value="$PROJECT_DIR$/whoknowsbot/console.py" />
-        <option value="$PROJECT_DIR$/whoknowsbot/bot_core.py" />
         <option value="$PROJECT_DIR$/whoknowsbot/mentions_replies.py" />
-        <option value="$PROJECT_DIR$/utils/twitter_utility.py" />
-        <option value="$PROJECT_DIR$/utils/log_utility.py" />
-        <option value="$PROJECT_DIR$/main.py" />
-        <option value="$PROJECT_DIR$/whoknowsbot/listener.py" />
         <option value="$PROJECT_DIR$/resources/retries_log.txt" />
         <option value="$PROJECT_DIR$/resources/errors_log.txt" />
+        <option value="$PROJECT_DIR$/utils/text_utility.py" />
+        <option value="$PROJECT_DIR$/main.py" />
+        <option value="$PROJECT_DIR$/whoknowsbot/listener.py" />
+        <option value="$PROJECT_DIR$/whoknowsbot/bot_core.py" />
+        <option value="$PROJECT_DIR$/utils/log_utility.py" />
+        <option value="$PROJECT_DIR$/whoknowsbot/twitter/reply.py" />
+        <option value="$PROJECT_DIR$/utils/retryable_utility.py" />
+        <option value="$PROJECT_DIR$/utils/twitter_utility.py" />
       </list>
     </option>
   </component>
@@ -259,11 +183,6 @@
             <path>
               <item name="WhoKnowsBot" type="b2602c69:ProjectViewProjectNode" />
               <item name="WhoKnowsBot" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="WhoKnowsBot" type="b2602c69:ProjectViewProjectNode" />
-              <item name="WhoKnowsBot" type="462c0819:PsiDirectoryNode" />
-              <item name="resources" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="WhoKnowsBot" type="b2602c69:ProjectViewProjectNode" />
@@ -293,6 +212,15 @@
   </component>
   <component name="PyCoverageOptionsProvider">
     <option name="myUseBundledCoveragePy" value="true" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\ericr\Documents\Projects\WhoKnowsBot\whoknowsbot\console" />
+      <recent name="C:\Users\ericr\Documents\Projects\WhoKnowsBot\whoknowsbot\twitter" />
+      <recent name="C:\Users\ericr\Documents\Projects\WhoKnowsBot\resources\text" />
+      <recent name="C:\Users\ericr\Documents\Projects\WhoKnowsBot\resources\log" />
+      <recent name="C:\Users\ericr\Documents\Projects\WhoKnowsBot\resources\lib" />
+    </key>
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -410,7 +338,10 @@
       <workItem from="1551013267413" duration="13280000" />
       <workItem from="1551058128399" duration="14969000" />
       <workItem from="1551103483598" duration="481000" />
-      <workItem from="1551121835798" duration="12370000" />
+      <workItem from="1551121835798" duration="12475000" />
+      <workItem from="1551147185302" duration="596000" />
+      <workItem from="1551210145803" duration="1585000" />
+      <workItem from="1551236309758" duration="5429000" />
     </task>
     <task id="LOCAL-00001" summary="Changed python version to match production server">
       <created>1541269473466</created>
@@ -482,11 +413,18 @@
       <option name="project" value="LOCAL" />
       <updated>1550982235420</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="Improved another level of stuff">
+      <created>1551136105893</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1551136105894</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="192874000" />
+    <option name="totallyTimeSpent" value="200589000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -504,7 +442,7 @@
       <window_info id="Designer" order="0" />
       <window_info id="UI Designer" order="1" />
       <window_info id="Favorites" order="2" side_tool="true" />
-      <window_info active="true" content_ui="combo" id="Project" order="3" visible="true" weight="0.28895614" />
+      <window_info content_ui="combo" id="Project" order="3" visible="true" weight="0.2980333" />
       <window_info id="Structure" order="4" side_tool="true" weight="0.25" />
       <window_info anchor="bottom" id="Version Control" order="0" show_stripe_button="false" />
       <window_info anchor="bottom" id="Spring" order="1" />
@@ -515,7 +453,7 @@
       <window_info anchor="bottom" id="Messages" order="6" weight="0.32741934" />
       <window_info anchor="bottom" id="Message" order="7" />
       <window_info anchor="bottom" id="Find" order="8" weight="0.32850242" />
-      <window_info anchor="bottom" id="Run" order="9" sideWeight="0.49924356" weight="0.6795491" />
+      <window_info anchor="bottom" id="Run" order="9" sideWeight="0.49924356" weight="0.47826087" />
       <window_info anchor="bottom" id="Debug" order="10" sideWeight="0.49924356" weight="0.61030596" />
       <window_info anchor="bottom" id="Cvs" order="11" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="12" weight="0.4" />
@@ -584,7 +522,8 @@
     <MESSAGE value="Implemented the word counter algorithm, mostly at least" />
     <MESSAGE value="Improved some stuff" />
     <MESSAGE value="Improved a lot of stuff" />
-    <option name="LAST_COMMIT_MESSAGE" value="Improved a lot of stuff" />
+    <MESSAGE value="Improved another level of stuff" />
+    <option name="LAST_COMMIT_MESSAGE" value="Improved another level of stuff" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
@@ -592,19 +531,14 @@
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/whoknowsbot/console.py</url>
+          <url>file://$PROJECT_DIR$/whoknowsbot/console/console.py</url>
           <line>14</line>
           <option name="timeStamp" value="33" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/utils/log_utility.py</url>
-          <line>15</line>
+          <line>16</line>
           <option name="timeStamp" value="78" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/main.py</url>
-          <line>11</line>
-          <option name="timeStamp" value="79" />
         </line-breakpoint>
       </breakpoints>
       <default-breakpoints>
@@ -750,7 +684,6 @@ print(message)</expression-string>
     </expressions>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$USER_HOME$/.virtualenvs/WhoKnowsBot-jqXw2hcH/Lib/site-packages/requests/adapters.py" />
     <entry file="file://$PROJECT_DIR$/temp" />
     <entry file="file://$USER_HOME$/.virtualenvs/WhoKnowsBot-jqXw2hcH/Lib/site-packages/twitter/api.py" />
     <entry file="file://$PROJECT_DIR$/resources/error_log.txt" />
@@ -887,16 +820,6 @@ print(message)</expression-string>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/utils/image_utility.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="238">
-          <caret line="14" column="19" lean-forward="true" selection-start-line="14" selection-start-column="19" selection-end-line="14" selection-end-column="19" />
-          <folding>
-            <element signature="e#0#54#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/temp.jpg" />
     <entry file="file://$PROJECT_DIR$/temp/1099505041172586496.jpg" />
     <entry file="file://$PROJECT_DIR$/configuration/bot_config.py">
@@ -951,34 +874,14 @@ print(message)</expression-string>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/resources/replies.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="272">
-          <caret line="16" column="60" selection-start-line="16" selection-start-column="60" selection-end-line="16" selection-end-column="60" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resources/custom_stopwords.py">
+    <entry file="file://$PROJECT_DIR$/resources/text/custom_stopwords.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="238">
           <caret line="14" column="12" lean-forward="true" selection-start-line="14" selection-start-column="12" selection-end-line="14" selection-end-column="12" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/whoknowsbot/bot_core.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="199">
-          <caret line="85" column="37" lean-forward="true" selection-start-line="85" selection-start-column="37" selection-end-line="85" selection-end-column="37" />
-          <folding>
-            <element signature="e#0#73#0" expanded="true" />
-            <element signature="e#207#1555#0" />
-            <element signature="e#3577#4973#0" />
-            <element signature="e#5016#5187#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/whoknowsbot/console.py">
+    <entry file="file://$PROJECT_DIR$/whoknowsbot/console/console.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="238">
           <caret line="14" selection-start-line="14" selection-end-line="14" />
@@ -988,90 +891,112 @@ print(message)</expression-string>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/whoknowsbot/mentions_replies.py">
+    <entry file="file://$PROJECT_DIR$/main.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="204">
-          <caret line="23" column="47" selection-start-line="23" selection-start-column="47" selection-end-line="23" selection-end-column="47" />
-          <folding>
-            <element signature="e#0#44#0" expanded="true" />
-            <element signature="e#282#604#0" />
-            <element signature="e#761#1610#0" />
-            <element signature="e#1776#2411#0" />
-            <element signature="e#2354#2981#0" />
-            <element signature="e#3671#4248#0" />
-          </folding>
+        <state relative-caret-position="51">
+          <caret line="3" selection-start-line="3" selection-end-line="3" selection-end-column="38" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/utils/log_utility.py">
+    <entry file="file://$PROJECT_DIR$/resources/log/errors_log.txt">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/text/replies.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="65">
-          <caret line="15" column="101" selection-start-line="15" selection-start-column="101" selection-end-line="15" selection-end-column="101" />
+        <state relative-caret-position="272">
+          <caret line="16" column="60" selection-start-line="16" selection-start-column="60" selection-end-line="16" selection-end-column="60" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/utils/text_utility.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret line="8" column="76" lean-forward="true" selection-start-line="8" selection-start-column="76" selection-end-line="8" selection-end-column="76" />
+        <state relative-caret-position="153">
+          <caret line="9" lean-forward="true" selection-start-line="9" selection-end-line="9" />
           <folding>
-            <element signature="e#305#385#0" />
-            <element signature="e#434#1407#0" />
-            <element signature="e#1445#1492#0" />
-            <element signature="e#1534#1698#0" />
-            <element signature="e#1746#1928#0" />
+            <element signature="e#0#11#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/main.py">
+    <entry file="file://$PROJECT_DIR$/utils/image_utility.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="238">
+          <caret line="14" column="19" lean-forward="true" selection-start-line="14" selection-start-column="19" selection-end-line="14" selection-end-column="19" />
+          <folding>
+            <element signature="e#0#31#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/log/retries_log.txt">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/utils/log_utility.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="374">
+          <caret line="22" column="4" selection-start-line="22" selection-start-column="4" selection-end-line="22" selection-end-column="4" />
+          <folding>
+            <element signature="e#0#44#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/whoknowsbot/twitter/reply.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-17">
+          <caret line="9" column="4" selection-start-line="9" selection-start-column="4" selection-end-line="9" selection-end-column="4" />
+          <folding>
+            <element signature="e#0#25#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/whoknowsbot/core.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="187">
-          <caret line="11" column="39" selection-start-line="11" selection-start-column="39" selection-end-line="11" selection-end-column="39" />
+          <caret line="99" column="45" selection-start-line="99" selection-start-column="45" selection-end-line="99" selection-end-column="45" />
           <folding>
-            <element signature="e#0#10#0" expanded="true" />
+            <element signature="e#0#73#0" expanded="true" />
+            <element signature="e#232#1580#0" />
+            <element signature="e#1633#3559#0" />
+            <element signature="e#3612#5044#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/whoknowsbot/twitter/listener.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="794">
+          <caret line="50" column="7" selection-start-line="50" selection-start-column="7" selection-end-line="50" selection-end-column="7" />
+          <folding>
+            <element signature="e#0#11#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/utils/retryable_utility.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="198">
+          <caret line="49" column="4" selection-start-line="49" selection-start-column="4" selection-end-line="49" selection-end-column="4" />
+          <folding>
+            <element signature="e#0#14#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/utils/twitter_utility.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="437">
-          <caret line="238" selection-start-line="238" selection-end-line="239" />
+        <state relative-caret-position="68">
+          <caret line="4" column="44" selection-start-line="4" selection-start-column="44" selection-end-line="4" selection-end-column="44" />
           <folding>
-            <element signature="e#0#14#0" expanded="true" />
-            <element signature="e#342#1244#0" />
-            <element signature="e#1300#1625#0" />
-            <element signature="e#1548#1927#0" />
-            <element signature="e#2539#5062#0" />
-            <element signature="e#5106#6301#0" />
-            <element signature="e#6137#6491#0" />
-            <element signature="e#6480#6749#0" />
-            <element signature="e#6662#6773#0" />
-            <element signature="e#6923#7042#0" />
-            <element signature="e#7089#7227#0" />
-            <element signature="e#7313#7415#0" />
-            <element signature="e#7563#7661#0" />
-            <element signature="e#7808#8015#0" />
+            <element signature="e#301#1150#0" />
+            <element signature="e#1206#1531#0" />
+            <element signature="e#1585#2153#0" />
+            <element signature="e#4784#6331#0" />
+            <element signature="e#4797#5982#0" />
           </folding>
         </state>
       </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/whoknowsbot/listener.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="204">
-          <caret line="34" column="17" lean-forward="true" selection-start-line="34" selection-start-column="17" selection-end-line="34" selection-end-column="17" />
-          <folding>
-            <element signature="e#0#14#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resources/errors_log.txt">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resources/retries_log.txt">
-      <provider selected="true" editor-type-id="text-editor" />
     </entry>
   </component>
 </project>

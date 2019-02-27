@@ -1,5 +1,6 @@
 from configuration.bot_config import amount_of_terms_to_retrieve, verbose
 from utils import text_utility, time_utility, twitter_utility
+from utils.log_utility import log_info
 
 
 def how_many_knows(api, term, user_id, user_name):
@@ -81,7 +82,7 @@ def who_knows(api, term, user_id, user_name):
                 suitable_follower_score = score
                 suitable_follower_id = follower
 
-        suitable_follower_screen_name = twitter_utility.retry_get_user_name(api, suitable_follower_id)
+        suitable_follower_screen_name = twitter_utility.retryable_get_user_name(api, suitable_follower_id)
 
         data["followers"] = followers
         data["follower_used_term"] = followers_used_term
@@ -97,9 +98,7 @@ def who_knows(api, term, user_id, user_name):
 
 
 def most_used_terms(api, user_id, user_name):
-    if verbose:
-        print("Iniciando análise | TERMOSMAISUSADOS")
-        print("Usuário: " + str(user_name))
+    log_info("Iniciando análise | TERMOSMAISUSADOS | Usuário: {user}.".format(user=user_name), "Most_Used_Terms")
 
     data = {"user_id": user_id, "user_name": user_name}
 
@@ -136,9 +135,7 @@ def most_used_terms(api, user_id, user_name):
 
     data["word_frequency"] = word_frequency_dict
 
-    if verbose:
-        print(data)
-        print("Análise concluída." + "\n")
+    log_info("Análise finalizada | TERMOSMAISUSADOS | Usuário: {user}.".format(user=user_name), "Most_Used_Terms")
 
     return data
 

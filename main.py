@@ -1,15 +1,15 @@
 import sys
 
 from configuration import twitter_connection
-from configuration.bot_config import verbose
-from whoknowsbot.console import get_user_data_with_term
-from whoknowsbot.listener import listener
+from utils.log_utility import log_info
+from whoknowsbot.console.console import get_user_data_with_term
+from whoknowsbot.twitter.listener import listener
 
 
 def main():
     api = twitter_connection.open_connection()
 
-    print("API configurada com sucesso.") if verbose else None
+    log_info("API configurada com sucesso.", "Main")
 
     if len(sys.argv) == 1:
         listener(api)

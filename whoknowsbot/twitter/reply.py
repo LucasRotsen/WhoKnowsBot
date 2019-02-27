@@ -1,11 +1,10 @@
 from twitter import error
 
-from configuration.bot_config import verbose
-from resources.replies import *
+from resources.text.replies import *
 from utils.file_utility import delete_file
 from utils.image_utility import get_wordcloud, save_wordcloud_image
-from utils.log_utility import log_error
-from utils.twitter_utility import retry_post_update
+from utils.log_utility import log_error, log_info
+from utils.twitter_utility import retryable_post_update
 
 
 def reply(api, data, mention, operation):
@@ -40,12 +39,12 @@ def reply_mention_how_many(api, data, mention):
     else:
         reply_how_many = get_positive_how_many_reply(knowledge_str, specialization_str, term, user)
 
-    print("Respondendo usuário...") if verbose else None
+    log_info("Respondendo usuário...", "Reply_Mention_How_Many")
 
     # Post the reply on Twitter
     try:
-        retry_post_update(api, reply_how_many, mention_id)
-        print("Resposta enviada. \n") if verbose else None
+        retryable_post_update(api, reply_how_many, mention_id)
+        log_info("Resposta enviada.", "Reply_Mention_How_Many")
 
     except error.TwitterError as e:
         log_error(e.message, "Reply_Mention_How_Many")
@@ -63,12 +62,12 @@ def reply_mention_who_know(api, data, mention):
     else:
         reply_who_know = get_negative_who_knows_reply(term, user)
 
-    print("Respondendo usuário...") if verbose else None
+    log_info("Respondendo usuário...", "Reply_Mention_Who_Now")
 
     # Post the reply on Twitter
     try:
-        retry_post_update(api, reply_who_know, mention_id)
-        print("Resposta enviada. \n") if verbose else None
+        retryable_post_update(api, reply_who_know, mention_id)
+        log_info("Resposta enviada.", "Reply_Mention_Who_Know")
 
     except error.TwitterError as e:
         log_error(e.message, "Reply_Mention_Who_Know")
@@ -85,11 +84,11 @@ def reply_mention_most_used_terms(api, data, mention):
 
     reply_most_used_terms = get_most_used_terms_reply(user)
 
-    print("Respondendo usuário...") if verbose else None
+    log_info("Respondendo usuário...", "Reply_Mention_Most_Used_Terms")
 
     try:
-        retry_post_update(api, reply_most_used_terms, mention_id, image_path)
-        print("Resposta enviada. \n") if verbose else None
+        retryable_post_update(api, reply_most_used_terms, mention_id, image_path)
+        log_info("Resposta enviada.", "Reply_Mention_Most_Used_Terms")
 
     except error.TwitterError as e:
         log_error(e.message, "Reply_Mention_Most_Used_Terms")
@@ -103,12 +102,12 @@ def reply_invalid_tweet(api, mention):
 
     reply_invalid = get_invalid_tweet_reply(user)
 
-    print("Respondendo usuário...") if verbose else None
+    log_info("Respondendo usuário...", "Reply_Invalid_Tweet")
 
     # Post the reply on Twitter
     try:
-        retry_post_update(api, reply_invalid, mention_id)
-        print("Resposta enviada. \n") if verbose else None
+        retryable_post_update(api, reply_invalid, mention_id)
+        log_info("Resposta enviada.", "Reply_Invalid_Tweet")
 
     except error.TwitterError as e:
         log_error(e.message, "Reply_Invalid_Tweet")
