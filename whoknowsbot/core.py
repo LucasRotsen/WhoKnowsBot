@@ -1,12 +1,11 @@
-from configuration.bot_config import amount_of_terms_to_retrieve, verbose
+from configuration.bot_config import amount_of_terms_to_retrieve
 from utils import text_utility, time_utility, twitter_utility
 from utils.log_utility import log_info
 
 
 def how_many_knows(api, term, user_id, user_name):
-    if verbose:
-        print("Iniciando análise | QUANTOSSABEM")
-        print("Usuário: " + str(user_name) + ". Termo: " + term + ".")
+    log_info("Iniciando análise | QuantosSabem | Usuário: {user} | Termo: {term}".format(user=user_name, term=term),
+             "How_Many_Knows")
 
     data = {}
 
@@ -37,17 +36,15 @@ def how_many_knows(api, term, user_id, user_name):
     data["proportion_of_knowledge"] = proportion_of_knowledge
     data["level_of_specialization"] = level_of_specialization
 
-    if verbose:
-        print(data)
-        print("Análise concluída." + "\n")
+    log_info(data, "How_Many_Knows")
+    log_info("Análise concluída.\n", "How_Many_Knows")
 
     return data
 
 
 def who_knows(api, term, user_id, user_name):
-    if verbose:
-        print("Iniciando análise | QUEMSABE")
-        print("Usuário: " + str(user_name) + ". Termo: " + term + ".")
+    log_info("Iniciando análise | QuemSabe | Usuário: {user} | Termo: {term}".format(user=user_name, term=term),
+             "Who_Knows")
 
     data = {"term": term, "user_id": user_id, "user_name": user_name}
 
@@ -90,9 +87,8 @@ def who_knows(api, term, user_id, user_name):
         data["suitable_follower_id"] = suitable_follower_id
         data["suitable_follower_screen_name"] = suitable_follower_screen_name
 
-    if verbose:
-        print(data)
-        print("Análise concluída." + "\n")
+    log_info(data, "Who_Knows")
+    log_info("Análise concluída.\n", "Who_Knows")
 
     return data
 

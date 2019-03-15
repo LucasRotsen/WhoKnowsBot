@@ -133,7 +133,7 @@ def get_users_posts(api, user_base):
             for tweet in tweets:
                 tweet_date = get_tweet_creation_date(tweet)
 
-                # If post is newer than limitDate...
+                # If post is newer than limitDate we append it otherwise we stop analysing this user's tweets.
                 if tweet_date > limit_date:
                     tweets.append(tweet)
 

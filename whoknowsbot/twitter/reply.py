@@ -1,13 +1,13 @@
-from twitter import error
-
 from resources.text.replies import *
 from utils.file_utility import delete_file
 from utils.image_utility import get_wordcloud, save_wordcloud_image
-from utils.log_utility import log_error, log_info
+from utils.log_utility import log_info
 from utils.twitter_utility import retryable_post_update
 
 
 def reply(api, data, mention, operation):
+    log_info("Respondendo usuário...", "Reply_Mention_How_Many")
+
     if operation == "QUANTOSSABEM":
         reply_mention_how_many(api, data, mention)
 
@@ -19,6 +19,8 @@ def reply(api, data, mention, operation):
 
     else:
         reply_invalid_tweet(api, mention)
+
+    log_info("Resposta enviada.", "Reply_Mention_How_Many")
 
 
 def reply_mention_how_many(api, data, mention):
@@ -39,15 +41,8 @@ def reply_mention_how_many(api, data, mention):
     else:
         reply_how_many = get_positive_how_many_reply(knowledge_str, specialization_str, term, user)
 
-    log_info("Respondendo usuário...", "Reply_Mention_How_Many")
-
     # Post the reply on Twitter
-    try:
-        retryable_post_update(api, reply_how_many, mention_id)
-        log_info("Resposta enviada.", "Reply_Mention_How_Many")
-
-    except error.TwitterError as e:
-        log_error(e.message, "Reply_Mention_How_Many")
+    retryable_post_update(api, reply_how_many, mention_id)
 
 
 def reply_mention_who_know(api, data, mention):
@@ -65,12 +60,7 @@ def reply_mention_who_know(api, data, mention):
     log_info("Respondendo usuário...", "Reply_Mention_Who_Now")
 
     # Post the reply on Twitter
-    try:
-        retryable_post_update(api, reply_who_know, mention_id)
-        log_info("Resposta enviada.", "Reply_Mention_Who_Know")
-
-    except error.TwitterError as e:
-        log_error(e.message, "Reply_Mention_Who_Know")
+    retryable_post_update(api, reply_who_know, mention_id)
 
 
 def reply_mention_most_used_terms(api, data, mention):
@@ -84,14 +74,8 @@ def reply_mention_most_used_terms(api, data, mention):
 
     reply_most_used_terms = get_most_used_terms_reply(user)
 
-    log_info("Respondendo usuário...", "Reply_Mention_Most_Used_Terms")
-
-    try:
-        retryable_post_update(api, reply_most_used_terms, mention_id, image_path)
-        log_info("Resposta enviada.", "Reply_Mention_Most_Used_Terms")
-
-    except error.TwitterError as e:
-        log_error(e.message, "Reply_Mention_Most_Used_Terms")
+    # Post the reply on Twitter
+    retryable_post_update(api, reply_most_used_terms, mention_id, image_path)
 
     delete_file(image_path)
 
@@ -102,12 +86,5 @@ def reply_invalid_tweet(api, mention):
 
     reply_invalid = get_invalid_tweet_reply(user)
 
-    log_info("Respondendo usuário...", "Reply_Invalid_Tweet")
-
     # Post the reply on Twitter
-    try:
-        retryable_post_update(api, reply_invalid, mention_id)
-        log_info("Resposta enviada.", "Reply_Invalid_Tweet")
-
-    except error.TwitterError as e:
-        log_error(e.message, "Reply_Invalid_Tweet")
+    retryable_post_update(api, reply_invalid, mention_id)
