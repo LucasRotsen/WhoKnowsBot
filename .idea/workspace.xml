@@ -1,17 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="f1b51c55-c3fa-49d6-9473-d4d65e2babd6" name="Default Changelist" comment="Improved another level of stuff">
-      <change beforePath="$PROJECT_DIR$/.idea/WhoKnowsBot.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/WhoKnowsBot.iml" afterDir="false" />
+    <list default="true" id="f1b51c55-c3fa-49d6-9473-d4d65e2babd6" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Pipfile" beforeDir="false" afterPath="$PROJECT_DIR$/Pipfile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Pipfile.lock" beforeDir="false" afterPath="$PROJECT_DIR$/Pipfile.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/text/replies.py" beforeDir="false" afterPath="$PROJECT_DIR$/resources/text/replies.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/twitter_utility.py" beforeDir="false" afterPath="$PROJECT_DIR$/utils/twitter_utility.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/whoknowsbot/console/console.py" beforeDir="false" afterPath="$PROJECT_DIR$/whoknowsbot/console/console.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/whoknowsbot/core.py" beforeDir="false" afterPath="$PROJECT_DIR$/whoknowsbot/core.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/whoknowsbot/twitter/listener.py" beforeDir="false" afterPath="$PROJECT_DIR$/whoknowsbot/twitter/listener.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/whoknowsbot/twitter/reply.py" beforeDir="false" afterPath="$PROJECT_DIR$/whoknowsbot/twitter/reply.py" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/venv/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -54,8 +45,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/.gitignore">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1919">
-              <caret line="116" column="14" lean-forward="true" selection-start-line="116" selection-start-column="14" selection-end-line="116" selection-end-column="14" />
+            <state relative-caret-position="293">
+              <caret line="114" lean-forward="true" selection-start-line="114" selection-end-line="120" selection-end-column="19" />
             </state>
           </provider>
         </entry>
@@ -128,7 +119,6 @@
         <option value="$PROJECT_DIR$/whoknowsbot/who_knows.py" />
         <option value="$PROJECT_DIR$/whoknowsbot/how_many_knows.py" />
         <option value="$PROJECT_DIR$/result.txt" />
-        <option value="$PROJECT_DIR$/.gitignore" />
         <option value="$PROJECT_DIR$/configuration/twitter_connection.py" />
         <option value="$PROJECT_DIR$/resources/custom_stopwords.py" />
         <option value="$PROJECT_DIR$/utils/file_utility.py" />
@@ -154,6 +144,7 @@
         <option value="$PROJECT_DIR$/whoknowsbot/console/console.py" />
         <option value="$PROJECT_DIR$/utils/twitter_utility.py" />
         <option value="$PROJECT_DIR$/whoknowsbot/twitter/reply.py" />
+        <option value="$PROJECT_DIR$/.gitignore" />
       </list>
     </option>
   </component>
@@ -344,7 +335,7 @@
       <workItem from="1552605285834" duration="664000" />
       <workItem from="1552605979954" duration="514000" />
       <workItem from="1552617536472" duration="326000" />
-      <workItem from="1552684615367" duration="4632000" />
+      <workItem from="1552684615367" duration="5127000" />
     </task>
     <task id="LOCAL-00001" summary="Changed python version to match production server">
       <created>1541269473466</created>
@@ -423,11 +414,18 @@
       <option name="project" value="LOCAL" />
       <updated>1551136105894</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="Improved another level of stuff">
+      <created>1552689587270</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1552689587270</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="206725000" />
+    <option name="totallyTimeSpent" value="207220000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -445,12 +443,12 @@
       <window_info id="Designer" order="0" />
       <window_info id="UI Designer" order="1" />
       <window_info id="Favorites" order="2" side_tool="true" />
-      <window_info active="true" content_ui="combo" id="Project" order="3" visible="true" weight="0.2730711" />
+      <window_info content_ui="combo" id="Project" order="3" visible="true" weight="0.2730711" />
       <window_info id="Structure" order="4" side_tool="true" weight="0.25" />
       <window_info anchor="bottom" id="Version Control" order="0" show_stripe_button="false" />
       <window_info anchor="bottom" id="Spring" order="1" />
       <window_info anchor="bottom" id="REST Client" order="2" weight="0.54873645" />
-      <window_info anchor="bottom" id="Terminal" order="3" sideWeight="0.49924356" visible="true" weight="0.3236715" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="3" sideWeight="0.49924356" visible="true" weight="0.3236715" />
       <window_info anchor="bottom" id="Database Changes" order="4" show_stripe_button="false" />
       <window_info anchor="bottom" id="Event Log" order="5" sideWeight="0.50075644" side_tool="true" weight="0.27858293" />
       <window_info anchor="bottom" id="Messages" order="6" weight="0.32741934" />
@@ -954,8 +952,8 @@ print(message)</expression-string>
     </entry>
     <entry file="file://$PROJECT_DIR$/.gitignore">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1919">
-          <caret line="116" column="14" lean-forward="true" selection-start-line="116" selection-start-column="14" selection-end-line="116" selection-end-column="14" />
+        <state relative-caret-position="293">
+          <caret line="114" lean-forward="true" selection-start-line="114" selection-end-line="120" selection-end-column="19" />
         </state>
       </provider>
     </entry>
