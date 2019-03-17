@@ -8,7 +8,7 @@ name = "pypi"
 [packages]
 python-twitter = "*"
 nltk = "*"
-wordcloud = {path = "./resources/lib/wordcloud-1.5.0-cp35-cp35m-win_amd64.whl"}
+wordcloud = {path = "resources/lib/wordcloud-1.5.0-cp35-cp35m-win_amd64.whl"}
 backoff = "*"
 
 [requires]
