@@ -1,10 +1,10 @@
 import twitter
 from twitter import error
 
-consumerKey = '1pTq010ZJiHFSkz7HCuqzXUpN'
-consumerSecret = 'ePcw81En1Twu2AXCOg6iacbXDMNdckEE0yuikR8QHrll4T5Okg'
-accessToken = '977978225870729216-XjrjD03txdtbRXYu9ZhB11W0pBHeiep'
-accessTokenSecret = 'zCdrMT0GTEi2UmEylsBWj5JTYF0U9s0601yIfW7pUv2ig'
+consumerKey = ''
+consumerSecret = ''
+accessToken = ''
+accessTokenSecret = ''
 
 
 def open_connection():
