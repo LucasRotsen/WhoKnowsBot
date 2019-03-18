@@ -28,20 +28,17 @@ Essas informações estão disponíveis na [página do desenvolvedor](https://ap
     accessToken = '0000000000-XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX'
     accessTokenSecret = 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX'
 
-No arquivo _bot_config.py_ é possível parametrizar se o robô deve imprimir no console os passos de sua execução, por padrão este valor é **True**:
+No arquivo _bot_config.py_ existem três parâmetros que influenciam no comportamento do robô:
 
     - verbose
-
-Ainda no arquivo _bot_config.py_ existem dois parâmetros que influenciam no comportamento da funcionalidade de contagem de termos:
-
     - amount_of_terms_to_retrieve
     - should_count_mentions
 
+O parâmetro _verbose_ especifica se o robô deve imprimir no console os passos de sua execução. Por padrão este valor é **True**.
+
 O parâmetro _amount_of_terms_to_retrieve_ define a quantidade de termos que serão retornados pelo método _most_used_terms_. Por padrão este valor é **10**.
 
-O parâmetro _should_count_mentions_ especifica se o método _most_used_terms_ deve contar menções. Por padrão este valor é **False**. 
-
-Exemplo: No tweet "@dan_abramov I love react" os termos "love" e "react" seriam contados uma vez cada e os termos "I" e "@dan_abramov" seriam ignorados. Caso `should_count_mentions = True`, o termo "@dan_abramov" também seria contado.
+O parâmetro _should_count_mentions_ especifica se o método _most_used_terms_ deve contar menções. **Exemplo**: No tweet "@dan_abramov I love react" os termos "love" e "react" seriam contados uma vez cada e os termos "I" e "@dan_abramov" seriam ignorados. Caso `should_count_mentions = True`, o termo "@dan_abramov" também seria contado. Por padrão este valor é **False**.
 
 
 ## Executando o Robô
