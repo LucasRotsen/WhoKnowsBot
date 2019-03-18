@@ -119,6 +119,8 @@ Essa análise foca em descobrir a frequência dos termos que aparecem na timelin
 
 É feita a coleta das publicações de quem o mencionador segue (amigos), que foram criadas até 7 dias precedentes ao início da análise e que possuem em seu conteúdo um termo especificado na menção. A função _most_used_terms(api, user_id, user_name)_ recupera os termos usados nas publicações e faz uma contagem destes.
 
+A contagem de termos é feita utilizando a biblioteca (nltk)[https://www.nltk.org/]. Textos podem conter palavras que não são relevantes na contagem (stop words) como: ele, ela, aquilo, isso. Estas palavras são removidas utilizando uma lista de palavras proveniente da biblioteca em conjunto com uma lista customizada presente no arquivo `resources/text/custom_stopwords.py`. Por consequência desta dependência de listas de stop words a funcionalidade de contagem de termos suporta apenas as linguagens inglês e português.
+
 
 ## Respostas
 Após a análise de cada menção, o mencionador é respondido, conforme o resultado opções dispiníveis no arquivo _mentions_replies.py_, podendo ser:
