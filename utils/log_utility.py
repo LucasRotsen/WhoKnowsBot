@@ -1,7 +1,7 @@
 from datetime import datetime
+from utils.file_utility import append
 
 from configuration.bot_config import verbose
-from utils.file_utility import append
 
 
 def log_error(error_message, method_name):
@@ -21,4 +21,4 @@ def log_retry(details):
 
 
 def log_info(info_message, method_name):
-    print("{method} - {message}".format(method=method_name, message=info_message)) if verbose else None
+    print("{method}: {message}".format(method=method_name, message=info_message)) if verbose else None

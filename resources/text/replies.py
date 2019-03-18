@@ -1,5 +1,5 @@
 def get_positive_how_many_reply(knowledge_str, specialization_str, term, user):
-    return "@{user}, {knowledge}% das pessoas que você segue falam sobre #{term}." \
+    return "@{user}, {knowledge}% das pessoas que você segue falam sobre #{term}. " \
            "O nível de especialização da sua rede a respeito desse assunto é {specialization} em uma escala " \
            "entre 0 e 1." \
         .format(user=user, knowledge=knowledge_str, term=term, specialization=specialization_str)
@@ -11,7 +11,7 @@ def get_negative_how_many_reply(term, user):
 
 
 def get_positive_who_knows_reply(suitable_follower, term, user):
-    return "@{user}, dos seus seguidores quem mais sabe sobre o assunto #{term} é @{user}." \
+    return "@{user}, dos seus seguidores quem mais sabe sobre o assunto #{term} é @{name}." \
         .format(user=user, term=term, name=suitable_follower)
 
 

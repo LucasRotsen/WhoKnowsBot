@@ -1,9 +1,10 @@
 import sys
-
-from configuration import twitter_connection
+from utils.file_utility import write
 from utils.log_utility import log_info
 from whoknowsbot.console.console import get_user_data_with_term
 from whoknowsbot.twitter.listener import listener
+
+from configuration import twitter_connection
 
 
 def main():
@@ -17,7 +18,8 @@ def main():
     elif len(sys.argv) == 3:
         user_name = sys.argv[1]
         term = sys.argv[2]
-        get_user_data_with_term(api, user_name, term)
+        data = get_user_data_with_term(api, user_name, term)
+        write("result.txt", str(data))
 
     else:
         raise ValueError("Sintaxe esperada: $ python main.py [nome_do_usario] [termo].")

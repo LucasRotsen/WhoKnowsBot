@@ -1,4 +1,3 @@
-from utils.file_utility import write
 from utils.twitter_utility import retryable_get_user_id
 from whoknowsbot.core import *
 
@@ -12,4 +11,4 @@ def get_user_data_with_term(api, user_name, term):
         "most_used_terms": most_used_terms(api, user_id, user_name)
     }
 
-    write("result.txt", str(data))
+    return data

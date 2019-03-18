@@ -83,12 +83,13 @@ def get_users_posts_term(api, user_base, term):
 
         max_id = 9000000000000000000
         num_tweets = 0
+        tweets = []
 
         while True:
-            tweets = retryable_get_user_timeline(api, max_id, user)
+            user_timeline = retryable_get_user_timeline(api, max_id, user)
 
             # For each post collected...
-            for tweet in tweets:
+            for tweet in user_timeline:
                 term_without_accents = text_utility.accent_remover(term)
                 tweet_without_accents = text_utility.accent_remover(tweet.text)
                 tweet_contains_term = tweet_without_accents.count(term_without_accents) > 0
@@ -101,14 +102,14 @@ def get_users_posts_term(api, user_base, term):
                 else:
                     break
 
-            num_tweets += len(tweets)
+            num_tweets += len(user_timeline)
 
             # Stop if timeline finishes or the last tweet from timeline is older than the limit date.
-            if len(tweets) == 0 or get_tweet_creation_date(tweets[len(tweets) - 1]) < limit_date:
+            if len(user_timeline) == 0 or get_tweet_creation_date(user_timeline[len(user_timeline) - 1]) < limit_date:
                 log_info("Fim da análise dos tweets do usuário: {id}".format(id=user), "Get_Users_Posts")
                 break
 
-            max_id = tweets[len(tweets) - 1].id - 1
+            max_id = user_timeline[len(user_timeline) - 1].id - 1
 
         dic_users_used_term[user] = [tweets, num_tweets]
 
@@ -125,12 +126,13 @@ def get_users_posts(api, user_base):
         log_info("Iniciando análise dos tweets do usuário: {id}".format(id=user), "Get_Users_Posts")
 
         max_id = 9000000000000000000
+        tweets = []
 
         while True:
-            tweets = retryable_get_user_timeline(api, max_id, user)
+            user_timeline = retryable_get_user_timeline(api, max_id, user)
 
             # For each post collected...
-            for tweet in tweets:
+            for tweet in user_timeline:
                 tweet_date = get_tweet_creation_date(tweet)
 
                 # If post is newer than limitDate we append it otherwise we stop analysing this user's tweets.
@@ -141,11 +143,11 @@ def get_users_posts(api, user_base):
                     break
 
             # Stop if timeline finishes or the last tweet from timeline is older than the limit date.
-            if len(tweets) == 0 or get_tweet_creation_date(tweets[len(tweets) - 1]) < limit_date:
+            if len(user_timeline) == 0 or get_tweet_creation_date(user_timeline[len(user_timeline) - 1]) < limit_date:
                 log_info("Fim da análise dos tweets do usuário: {id}".format(id=user), "Get_Users_Posts")
                 break
 
-            max_id = tweets[len(tweets) - 1].id - 1
+            max_id = user_timeline[len(user_timeline) - 1].id - 1
 
         dic_users_posts[user] = tweets
 

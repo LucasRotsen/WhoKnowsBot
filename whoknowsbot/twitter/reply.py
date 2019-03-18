@@ -6,7 +6,7 @@ from utils.twitter_utility import retryable_post_update
 
 
 def reply(api, data, mention, operation):
-    log_info("Respondendo usuário...", "Reply_Mention_How_Many")
+    log_info("Respondendo usuário...", "Reply")
 
     if operation == "QUANTOSSABEM":
         reply_mention_how_many(api, data, mention)
@@ -20,7 +20,7 @@ def reply(api, data, mention, operation):
     else:
         reply_invalid_tweet(api, mention)
 
-    log_info("Resposta enviada.", "Reply_Mention_How_Many")
+    log_info("Resposta enviada.", "Reply")
 
 
 def reply_mention_how_many(api, data, mention):
@@ -56,8 +56,6 @@ def reply_mention_who_know(api, data, mention):
 
     else:
         reply_who_know = get_negative_who_knows_reply(term, user)
-
-    log_info("Respondendo usuário...", "Reply_Mention_Who_Now")
 
     # Post the reply on Twitter
     retryable_post_update(api, reply_who_know, mention_id)
