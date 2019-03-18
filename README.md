@@ -4,7 +4,7 @@
  ## Overview do projeto
  <p>WhoKnowsBot é um robô social. Ele  foi desenvolvido como um estudo de caso sobre desenvolvimento de componentes de software associados a computação por humanos (human computation). O estudo é parte do projeto PIBIC-CNPq coordenado pelo prof. Lesandro Ponciano e conduzido pelo aluno bolsista Arthur Vinicius Soares, no curso Bacharelado em Sistemas de Informação da Pontifícia Universidade Católica de Minas Gerais (PUC Minas). O projeto foi executado entre Agosto de 2017 e Julho de 2018.</p>
  
- <p>De forma geral, o robô possui duas funcionalidades principais que podem ser acionadas pelo usuário: atribuição e agregação. Pela funcionalidade de atribuição (escalonamento), o usuário informa ao robô um tópico e o robô responde ao usuário quem (entre as pessoa que seguem o usuário no twitter) mais fala sobre aquele tópico no twitter. Pela funcionalidade de agregação, o usuário informa ao robô um tópico e o robô responde ao usuário quantas (entre as pessoa o usuário segue no twitter) falaram sobre aquele tópico no twitter. </p>
+ <p>De forma geral, o robô possui três funcionalidades principais que podem ser acionadas pelo usuário: atribuição, agregação e contagem de termos. Pela funcionalidade de atribuição (escalonamento), o usuário informa ao robô um tópico e o robô responde ao usuário quem (entre as pessoa que seguem o usuário no twitter) mais fala sobre aquele tópico no twitter. Pela funcionalidade de agregação, o usuário informa ao robô um tópico e o robô responde ao usuário quantas (entre as pessoa o usuário segue no twitter) falaram sobre aquele tópico no twitter. Pela contagem de termos o robô enumera os termos mais frequentes na timeline do usuário e o responde com uma nuvem de palavras.</p>
  
  <p>Há uma instância do robô ativa em https://twitter.com/whoknowsbot Informações sobre como conversar com o robô e explicações sobre as respostas dele estão em https://drive.google.com/file/d/1jhFCTByFLM2uOGsqa_BUB0BR9FarKnlV/view.<p>
  
@@ -45,16 +45,25 @@ Em seguida verifique se o `pipenv` está instalado com o comando `pipenv --versi
 
       $ pip install --user pipenv
    
-Com o pipenv instalado, basta executar na pasta raiz do projeto:
+Com o pipenv instalado, execute na pasta raiz do projeto para instalar as dependências:
 
       $ pipenv install
-      $ pipenv run python main.py
   
-O primeiro comando vai instalar as dependências especificadas no arquivo "Pipfile" e o segundo vai iniciar o robô através da execução do arquivo "main.py". Este script está em um loop infinito, quando necessário deve-se interrompê-lo manualmente.
+Execute para iniciar o robô:
+
+      $ pipenv run python main.py
+
+Para acessar as funcionalidades do robô sem a interação pelo Twitter, forneça o username do usuário que será analisado e o termo desejado:
+
+      $ pipenv run python main.py [screen_name] [termo]
+
+Executando `pipenv run python main.py dan_abramov react` as funcionalidades providas pelo robô serão executadas para o usuário Dan Abramov em relação ao termo 'react'. As saídas dos algoritmos serão salvas no arquivo 'result.txt' na pasta raiz do projeto.
+
+_O robô do Twitter está em um loop infinito, quando necessário deve-se interrompê-lo manualmente._
   
   
   ## Ativação do script
-  <p>Com o script executando, sempre que uma novas menções são direcionadas à conta do Twitter associado às variáveis definidas acima, inicia-se a análise de cada menção individualmente.<br/>
+  <p>Com o script executando, sempre que novas menções são direcionadas à conta do Twitter associado às variáveis definidas acima, inicia-se a análise de cada menção individualmente.<br/>
   OBS: Por conta de limites da API, a verificação de novas menções ocorrem de 1 em 1 minuto.
   </p>
   Quando não há novas menções o script hiberna por 1 minutos, e verifica novamente novas menções.<br/>
