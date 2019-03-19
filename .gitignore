@@ -113,8 +113,6 @@ dmypy.json
 .pyre/
 
 # Project stuff
-errors_log.txt
-search_limit.txt
 result.txt
 /.vs
 /WhoKnowsBot.pyproj

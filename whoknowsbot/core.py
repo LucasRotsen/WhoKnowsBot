@@ -29,9 +29,6 @@ def how_many_knows(api, term, user_id, user_name):
     data["term"] = term
     data["user_id"] = user_id
     data["user_name"] = user_name
-    data["friends"] = friends
-    data["friends_used_term"] = friends_used_term
-    data["friends_with_knowledge"] = friends_with_knowledge
     data["total_of_specialization"] = total_of_specialization
     data["proportion_of_knowledge"] = proportion_of_knowledge
     data["level_of_specialization"] = level_of_specialization

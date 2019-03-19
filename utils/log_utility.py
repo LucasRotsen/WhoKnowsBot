@@ -1,7 +1,7 @@
 from datetime import datetime
-from utils.file_utility import append
 
 from configuration.bot_config import verbose
+from utils.file_utility import append
 
 
 def log_error(error_message, method_name):
@@ -14,10 +14,12 @@ def log_error(error_message, method_name):
 def log_retry(details):
     date = str(datetime.now())
 
-    message = "{date} - Backing off {wait:0.1f} seconds afters {tries} tries calling function {target} \n" \
+    message = "{date} - Backing off {wait:0.1f} seconds afters {tries} tries calling function {target}" \
         .format(date=date, **details)
 
-    append('resources/log/retries_log.txt', message)
+    log_info(message, "Retryable")
+
+    append('resources/log/retries_log.txt', message + "\n")
 
 
 def log_info(info_message, method_name):

@@ -1,5 +1,6 @@
 def custom_stopwords():
     return ((
+        "amp",
         "rt",
         "https",
         "http"

@@ -79,7 +79,7 @@ def get_users_posts_term(api, user_base, term):
     limit_date = datetime.strptime(str(datetime.now()), '%Y-%m-%d %H:%M:%S.%f') - timedelta(days=7)
 
     for user in user_base:
-        log_info("Iniciando análise dos tweets do usuário: {id}".format(id=user), "Get_Users_Posts")
+        log_info("Iniciando análise dos tweets do usuário: {id}".format(id=user), "Get_Users_Posts_Term")
 
         max_id = 9000000000000000000
         num_tweets = 0

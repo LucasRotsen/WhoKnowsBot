@@ -13,11 +13,11 @@ def retryable_get_user_timeline(api, max_id, user):
     try:
         return api.GetUserTimeline(count=200, user_id=user, max_id=max_id, exclude_replies=False, include_rts=True)
 
-    # When user account is private a 'Not Authorized' exception will occur, this cases will be skipped.
+    # When user account is private a 'Not Authorized' exception will occur.
     except TwitterError as e:
         log_info("Impossível recuperar a timeline. O usuário {id} é privado.".format(id=user),
                  "Retry_Get_User_Timeline")
-        log_error(e.message, "retry_get_user_timeline")
+        return []
 
 
 @backoff.on_exception(backoff.expo, RequestException, jitter=backoff.full_jitter, on_backoff=log_retry)
