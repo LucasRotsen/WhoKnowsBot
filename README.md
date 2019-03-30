@@ -121,6 +121,9 @@ Essa análise foca em descobrir a frequência dos termos que aparecem na timelin
 
 A contagem de termos é feita utilizando a biblioteca [nltk](https://www.nltk.org). Textos podem conter palavras que não são relevantes na contagem (stop words) como: ele, ela, aquilo, isso. Estas palavras são removidas utilizando uma lista de palavras proveniente da biblioteca em conjunto com uma lista customizada presente no arquivo `resources/text/custom_stopwords.py`. Por consequência desta dependência de listas de stop words a funcionalidade de contagem de termos suporta apenas as linguagens inglês e português.
 
+Veja abaixo o diagrama de sequência que representa essa análise:
+
+![alt text](https://i.ibb.co/NS6k1TB/Counting-algorithm.jpg "Diagrama de Sequência - Termos mais usados")
 
 ## Respostas
 Após a análise de cada menção, o mencionador é respondido, conforme o resultado opções dispiníveis no arquivo _mentions_replies.py_, podendo ser:
