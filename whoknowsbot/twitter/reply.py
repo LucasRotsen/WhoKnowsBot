@@ -14,7 +14,7 @@ def reply(api, data, mention, operation):
     elif operation == "QUEMSABE":
         reply_mention_who_know(api, data, mention)
 
-    elif operation == "TERMOSMAISUSADOS":
+    elif operation == "SOBREOQUESABEM":
         reply_mention_most_used_terms(api, data, mention)
 
     else:

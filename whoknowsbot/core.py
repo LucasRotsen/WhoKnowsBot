@@ -29,6 +29,7 @@ def how_many_knows(api, term, user_id, user_name):
     data["term"] = term
     data["user_id"] = user_id
     data["user_name"] = user_name
+    data["friends_with_knowledge"] = friends_with_knowledge
     data["total_of_specialization"] = total_of_specialization
     data["proportion_of_knowledge"] = proportion_of_knowledge
     data["level_of_specialization"] = level_of_specialization
@@ -91,7 +92,7 @@ def who_knows(api, term, user_id, user_name):
 
 
 def most_used_terms(api, user_id, user_name):
-    log_info("Iniciando análise | TERMOSMAISUSADOS | Usuário: {user}.".format(user=user_name), "Most_Used_Terms")
+    log_info("Iniciando análise | SOBREOQUESABEM | Usuário: {user}.".format(user=user_name), "Most_Used_Terms")
 
     data = {"user_id": user_id, "user_name": user_name}
 
@@ -128,7 +129,7 @@ def most_used_terms(api, user_id, user_name):
 
     data["word_frequency"] = word_frequency_dict
 
-    log_info("Análise finalizada | TERMOSMAISUSADOS | Usuário: {user}.".format(user=user_name), "Most_Used_Terms")
+    log_info("Análise finalizada | SOBREOQUESABEM | Usuário: {user}.".format(user=user_name), "Most_Used_Terms")
 
     return data
 

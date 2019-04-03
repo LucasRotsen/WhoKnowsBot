@@ -42,7 +42,7 @@ def dispatcher(api, mention, operation, term, user_id, user_name):
     elif operation == "QUEMSABE":
         data = who_knows(api, term, user_id, user_name)
 
-    elif operation == "TERMOSMAISUSADOS":
+    elif operation == "SOBREOQUESABEM":
         data = most_used_terms(api, user_id, user_name)
 
     else:
