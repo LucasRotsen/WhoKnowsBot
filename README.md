@@ -79,7 +79,7 @@ Quando não há novas menções o script hiberna por 1 minutos, e verifica novam
 
 
 ## Análise das menções
-A função _listener()_ é a primeira função a ser chamada no script. Ela é responsável pela coleta de novas menções, e determinar qual a próxima função a ser chamada de acordo com o conteúdo da menção. Para cada menção que é coletada, a string com seu conteúdo é quebrada, e verifica-se se o termo que o usuário utilizou. As opções padrões são limitadas ao uso dos termos QUEMSABE, QUANTOSSABEM e TERMOSMAISUSADOS.
+A função _listener()_ é a primeira função a ser chamada no script. Ela é responsável pela coleta de novas menções, e determinar qual a próxima função a ser chamada de acordo com o conteúdo da menção. Para cada menção que é coletada, a string com seu conteúdo é quebrada, e verifica-se se o termo que o usuário utilizou. As opções padrões são limitadas ao uso dos termos QUEMSABE, QUANTOSSABEM e SOBREOQUESABEM.
 
 A forma como será decidido qual fluxo seguir pode ser personalizada conforme o uso que será dado ao script.
 
@@ -136,7 +136,7 @@ Para análise do tipo QUEMSABE:
 
     - reply_mention_who_know(api, data, mention)
 
-Para análise do tipo TERMOSMAISUSADOS:
+Para análise do tipo SOBREOQUESABEM:
 
     - reply_mention_most_used_terms(api, data, mention)
 
