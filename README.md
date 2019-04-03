@@ -114,7 +114,7 @@ Veja abaixo o diagrama de sequência que representa essa análise:
 ![alt text](https://preview.ibb.co/dGL17o/image3.jpg "Diagrama de Sequência - Quem sabe")
 
 
-## Termos mais usados
+## Sobre o que sabem
 Essa análise foca em descobrir a frequência dos termos que aparecem na timeline do usuário.
 
 É feita a coleta das publicações de quem o mencionador segue (amigos), que foram criadas até 7 dias precedentes ao início da análise e que possuem em seu conteúdo um termo especificado na menção. A função _most_used_terms(api, user_id, user_name)_ recupera os termos usados nas publicações e faz uma contagem destes.
