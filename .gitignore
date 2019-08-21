@@ -117,3 +117,4 @@ result.txt
 /.vs
 /WhoKnowsBot.pyproj
 .idea/
+configuration/twitter_connection\.py
