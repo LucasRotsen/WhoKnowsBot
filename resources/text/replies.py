@@ -6,7 +6,7 @@ def get_positive_how_many_reply(knowledge_str, specialization_str, term, user):
 
 
 def get_negative_how_many_reply(term, user):
-    return "@{user}, lamento mas não encontrei ninguém dentre as pessoas que você segue falando sobre #{term}." \
+    return "@{user}, próximo a zero, não encontrei pessoas que você segue falando sobre #{term}." \
         .format(user=user, term=term)
 
 
@@ -16,8 +16,7 @@ def get_positive_who_knows_reply(suitable_follower, term, user):
 
 
 def get_negative_who_knows_reply(term, user):
-    return "@{user}, dos seus seguidores ninguém sabe sobre #{term} " \
-           "ou nunca mencionou sobre este assunto aqui na rede." \
+    return "@{user}, quase ninguém, seus seguidores não publicam muito sobre #{term} " \
         .format(user=user, term=term)
 
 
