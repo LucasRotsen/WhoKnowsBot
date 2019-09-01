@@ -1,3 +1,4 @@
+import re
 import time
 from datetime import datetime
 
@@ -16,9 +17,10 @@ def listener(api):
         # reversed is used to dispatch mentions in the order they are tweeted.
         for mention in reversed(new_mentions):
             tweet_text = mention.text
-            tweet_text_splitted = tweet_text.split(" ")
+            tweet_text_remove_spaces = re.sub(' +', ' ', tweet_text)
+            tweet_text_splitted = tweet_text_remove_spaces.split(" ")
 
-            term = mention.hashtags[0].text if len(mention.hashtags) > 0 else None
+            term = tweet_text_splitted[2]
             user_id = mention.user.id
             user_name = mention.user.screen_name
             operation = tweet_text_splitted[1].upper()
@@ -29,8 +31,10 @@ def listener(api):
             file_utility.write('resources/search_limit.txt', mention.id)
 
         time_after_processing = datetime.now()
-        processing_duration = (time_after_processing - time_before_processing).total_seconds()
-        None if processing_duration > 60 else time.sleep(60 - processing_duration)
+        processing_duration = (time_after_processing -
+                               time_before_processing).total_seconds()
+        None if processing_duration > 60 else time.sleep(
+            60 - processing_duration)
 
 
 def dispatcher(api, mention, operation, term, user_id, user_name):
