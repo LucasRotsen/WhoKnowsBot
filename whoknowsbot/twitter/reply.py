@@ -39,7 +39,8 @@ def reply_mention_how_many(api, data, mention):
         reply_how_many = get_negative_how_many_reply(term, user)
 
     else:
-        reply_how_many = get_positive_how_many_reply(knowledge_str, specialization_str, term, user)
+        reply_how_many = get_positive_how_many_reply(
+            knowledge_str, specialization_str, term, user)
 
     # Post the reply on Twitter
     retryable_post_update(api, reply_how_many, mention_id)
@@ -52,7 +53,8 @@ def reply_mention_who_know(api, data, mention):
     term = data["term"]
 
     if "suitable_follower_screen_name" in data:
-        reply_who_know = get_positive_who_knows_reply(str(data["suitable_follower_screen_name"]), term, user)
+        reply_who_know = get_positive_who_knows_reply(
+            str(data["suitable_follower_screen_name"]), term, user)
 
     else:
         reply_who_know = get_negative_who_knows_reply(term, user)
