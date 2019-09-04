@@ -44,8 +44,6 @@ O parâmetro _should_count_mentions_ especifica se o método _most_used_terms_ d
 
 _Este projeto foi testado no sistema operacional Ubuntu 18.04 com Python 3.6.8._
 
-Para executar o robô é necessário checar se o `pip` está instalado com o comando `pip --version`. Se o comando não for reconhecido é possível instalá-lo no Ubuntu 18.04 com o gerenciador de pacotes:
-
 Para executar o robô é necessário instalar as dependências do projeto. No Ubuntu 18.04 a instalação pode ser feita executando o script _whoknowsbot-config.sh_ na pasta raiz do projeto:
 
      $ chmod +x whoknowsbot-config.sh && ./whoknowsbot-config.sh
